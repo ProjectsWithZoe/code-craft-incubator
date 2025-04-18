@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { getRandomProjects, Project } from '@/data/projects';
@@ -17,7 +16,7 @@ const ProjectIdeas = () => {
     setLoading(true);
     
     setTimeout(() => {
-      const randomProjects = getRandomProjects(3, projectType);
+      const randomProjects = getRandomProjects(projectType);
       setProjects(randomProjects);
       setLoading(false);
     }, 800);

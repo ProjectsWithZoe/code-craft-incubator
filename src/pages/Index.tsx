@@ -2,7 +2,8 @@
 import React from 'react';
 import ProjectIdeas from '@/components/ProjectIdeas';
 import { Separator } from '@/components/ui/separator';
-import { Code2, Layout, Globe, Rocket, Book, Target, Trophy } from 'lucide-react';
+import { Code2, Layout, Globe, Rocket, Book, Target, Trophy, LogIn, UserPlus } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,6 +15,20 @@ import {
 const Index = () => {
   return (
     <div className="container min-h-screen py-8 px-4">
+      <div className="flex justify-between items-center mb-12">
+        <div></div> {/* Empty div for flex spacing */}
+        <div className="flex gap-4">
+          <Button variant="outline" size="sm" className="gap-2">
+            <LogIn className="h-4 w-4" />
+            Log In
+          </Button>
+          <Button size="sm" className="gap-2">
+            <UserPlus className="h-4 w-4" />
+            Sign Up
+          </Button>
+        </div>
+      </div>
+
       <header className="text-center my-12">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center">
