@@ -1,0 +1,294 @@
+[
+  {
+    "id": "digital-postcard-creator",
+    "name": "Digital Postcard Creator",
+    "icon": "Mail",
+    "description": "Create a custom digital postcard with background images, personalized messages, and download functionality. Includes a confetti animation when the postcard is 'sent'.",
+    "difficulty": "Beginner",
+    "category": "HTML/CSS/JavaScript",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Set Up HTML Structure",
+        "description": "Create the basic HTML layout with sections for the postcard creator interface and the postcard preview area. Include areas for background selection, text input, styling controls, and action buttons.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Digital Postcard Creator</title>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body>\n  <header>\n    <h1>Digital Postcard Creator 📬</h1>\n    <p>Create and download your own custom digital postcard!</p>\n  </header>\n\n  <main>\n    <div class=\"editor-container\">\n      <div class=\"controls\">\n        <h2>Customize Your Postcard</h2>\n        \n        <div class=\"control-section\">\n          <h3>Choose Background</h3>\n          <div class=\"background-options\">\n            <div class=\"bg-option\" data-bg=\"beach.jpg\">\n              <img src=\"images/beach.jpg\" alt=\"Beach\">\n            </div>\n            <div class=\"bg-option\" data-bg=\"mountains.jpg\">\n              <img src=\"images/mountains.jpg\" alt=\"Mountains\">\n            </div>\n            <div class=\"bg-option\" data-bg=\"sunset.jpg\">\n              <img src=\"images/sunset.jpg\" alt=\"Sunset\">\n            </div>\n            <div class=\"bg-option\" data-bg=\"cityscape.jpg\">\n              <img src=\"images/cityscape.jpg\" alt=\"Cityscape\">\n            </div>\n          </div>\n        </div>\n        \n        <div class=\"control-section\">\n          <h3>Your Message</h3>\n          <textarea id=\"postcard-message\" placeholder=\"Enter your message here...\"></textarea>\n        </div>\n        \n        <div class=\"control-section\">\n          <h3>Text Style</h3>\n          <div class=\"text-controls\">\n            <div class=\"control-group\">\n              <label for=\"text-color\">Color:</label>\n              <input type=\"color\" id=\"text-color\" value=\"#ffffff\">\n            </div>\n            <div class=\"control-group\">\n              <label for=\"font-family\">Font:</label>\n              <select id=\"font-family\">\n                <option value=\"Arial, sans-serif\">Arial</option>\n                <option value=\"'Times New Roman', serif\">Times New Roman</option>\n                <option value=\"'Courier New', monospace\">Courier New</option>\n                <option value=\"'Pacifico', cursive\">Pacifico</option>\n                <option value=\"'Dancing Script', cursive\">Dancing Script</option>\n              </select>\n            </div>\n            <div class=\"control-group\">\n              <label for=\"font-size\">Size:</label>\n              <input type=\"range\" id=\"font-size\" min=\"12\" max=\"32\" value=\"20\">\n              <span id=\"font-size-value\">20px</span>\n            </div>\n          </div>\n        </div>\n        \n        <div class=\"action-buttons\">\n          <button id=\"send-button\">Send Postcard</button>\n          <button id=\"download-button\">Download</button>\n        </div>\n      </div>\n      \n      <div class=\"preview\">\n        <h2>Preview</h2>\n        <div id=\"postcard\" class=\"postcard\">\n          <div id=\"postcard-text\" class=\"postcard-text\">Your message will appear here...</div>\n        </div>\n      </div>\n    </div>\n  </main>\n  \n  <div id=\"confetti-container\" class=\"confetti-container\"></div>\n  \n  <footer>\n    <p>Created with ❤️ | Digital Postcard Creator</p>\n  </footer>\n\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js\"></script>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Create Basic CSS Styling",
+        "description": "Style the application with responsive layout, attractive controls, and a realistic postcard preview that matches standard postcard dimensions.",
+        "code": {
+          "file": "styles.css",
+          "snippet": "/* Base Styles */\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  font-family: Arial, sans-serif;\n  line-height: 1.6;\n  color: #333;\n  background-color: #f4f4f4;\n  padding: 20px;\n}\n\nheader {\n  text-align: center;\n  margin-bottom: 30px;\n}\n\nh1 {\n  color: #2c3e50;\n  margin-bottom: 10px;\n}\n\nh2 {\n  margin-bottom: 15px;\n  color: #2c3e50;\n}\n\nh3 {\n  font-size: 1.1rem;\n  margin-bottom: 10px;\n  color: #2c3e50;\n}\n\n/* Layout */\nmain {\n  max-width: 1200px;\n  margin: 0 auto;\n}\n\n.editor-container {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 20px;\n  margin-bottom: 30px;\n}\n\n.controls {\n  flex: 1;\n  min-width: 300px;\n  background-color: #fff;\n  padding: 20px;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n}\n\n.preview {\n  flex: 1;\n  min-width: 300px;\n  padding: 20px;\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n/* Control Sections */\n.control-section {\n  margin-bottom: 25px;\n  border-bottom: 1px solid #eee;\n  padding-bottom: 20px;\n}\n\n.control-section:last-child {\n  border-bottom: none;\n}\n\n/* Background Options */\n.background-options {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));\n  gap: 10px;\n}\n\n.bg-option {\n  cursor: pointer;\n  border: 2px solid transparent;\n  border-radius: 4px;\n  overflow: hidden;\n  transition: all 0.2s ease;\n}\n\n.bg-option img {\n  width: 100%;\n  height: 80px;\n  object-fit: cover;\n  display: block;\n}\n\n.bg-option.selected {\n  border-color: #3498db;\n  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);\n}\n\n/* Form Controls */\ntextarea {\n  width: 100%;\n  min-height: 100px;\n  padding: 10px;\n  border: 1px solid #ddd;\n  border-radius: 4px;\n  resize: vertical;\n  font-family: inherit;\n  margin-bottom: 10px;\n}\n\n.text-controls {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n\n.control-group {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.control-group label {\n  min-width: 60px;\n  font-weight: bold;\n}\n\n.control-group input,\n.control-group select {\n  flex-grow: 1;\n  padding: 8px;\n  border: 1px solid #ddd;\n  border-radius: 4px;\n}\n\n.control-group input[type=\"color\"] {\n  height: 35px;\n  padding: 2px;\n}\n\n/* Action Buttons */\n.action-buttons {\n  display: flex;\n  gap: 10px;\n  margin-top: 20px;\n}\n\nbutton {\n  padding: 10px 20px;\n  background-color: #3498db;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  font-weight: bold;\n  transition: background-color 0.2s ease;\n}\n\nbutton:hover {\n  background-color: #2980b9;\n}\n\n#download-button {\n  background-color: #2ecc71;\n}\n\n#download-button:hover {\n  background-color: #27ae60;\n}\n\n/* Postcard Preview */\n.postcard {\n  width: 400px;\n  height: 280px; /* 10:7 ratio like traditional postcards */\n  background-color: #f8f8f8;\n  background-image: url('images/beach.jpg');\n  background-size: cover;\n  background-position: center;\n  border-radius: 8px;\n  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);\n  position: relative;\n  overflow: hidden;\n}\n\n.postcard-text {\n  position: absolute;\n  bottom: 20px;\n  left: 20px;\n  right: 20px;\n  color: white;\n  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);\n  font-size: 20px;\n  font-family: Arial, sans-serif;\n  max-height: 200px;\n  overflow-y: auto;\n  padding: 10px;\n  background-color: rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n}\n\n/* Confetti Container */\n.confetti-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  pointer-events: none;\n  z-index: 1000;\n  display: none;\n}\n\n/* Footer */\nfooter {\n  text-align: center;\n  margin-top: 20px;\n  padding: 10px;\n  color: #7f8c8d;\n}\n\n/* Responsive adjustments */\n@media (max-width: 768px) {\n  .editor-container {\n    flex-direction: column;\n  }\n  \n  .postcard {\n    width: 320px;\n    height: 224px;\n  }\n}\n\n/* For the confetti animation */\n.confetti {\n  position: absolute;\n  width: 10px;\n  height: 10px;\n  opacity: 0;\n  transform: translateY(0) rotate(0);\n  pointer-events: none;\n  animation: fall 3s ease-in-out forwards;\n}\n\n@keyframes fall {\n  0% {\n    opacity: 1;\n    transform: translateY(0) rotate(0);\n  }\n  100% {\n    opacity: 0;\n    transform: translateY(100vh) rotate(360deg);\n  }\n}"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Create Image Folder Structure",
+        "description": "Set up a folder to store the background images for the postcard. You'll need to create an 'images' folder and add at least four background options: beach.jpg, mountains.jpg, sunset.jpg, and cityscape.jpg.",
+        "code": {
+          "file": "folder-structure.txt",
+          "snippet": "project-folder/\n├── index.html\n├── styles.css\n├── script.js\n└── images/\n    ├── beach.jpg\n    ├── mountains.jpg\n    ├── sunset.jpg\n    └── cityscape.jpg"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Implement Background Selection",
+        "description": "Add JavaScript functionality to allow users to select different backgrounds for their postcard, updating the preview in real-time.",
+        "code": {
+          "file": "script.js",
+          "snippet": "// DOM Elements\nconst bgOptions = document.querySelectorAll('.bg-option');\nconst postcardElement = document.getElementById('postcard');\nconst messageInput = document.getElementById('postcard-message');\nconst postcardText = document.getElementById('postcard-text');\nconst textColor = document.getElementById('text-color');\nconst fontFamily = document.getElementById('font-family');\nconst fontSize = document.getElementById('font-size');\nconst fontSizeValue = document.getElementById('font-size-value');\nconst sendButton = document.getElementById('send-button');\nconst downloadButton = document.getElementById('download-button');\nconst confettiContainer = document.getElementById('confetti-container');\n\n// Initial selected background (beach)\nlet selectedBackground = 'beach.jpg';\n\n// Background selection\nbgOptions.forEach(option => {\n  option.addEventListener('click', () => {\n    // Remove selected class from all options\n    bgOptions.forEach(opt => opt.classList.remove('selected'));\n    \n    // Add selected class to clicked option\n    option.classList.add('selected');\n    \n    // Get the background image filename\n    selectedBackground = option.getAttribute('data-bg');\n    \n    // Update the postcard background\n    updatePostcardBackground();\n  });\n});\n\n// Set initial selected background\nbgOptions[0].classList.add('selected');\n\n// Update the postcard background image\nfunction updatePostcardBackground() {\n  postcardElement.style.backgroundImage = `url('images/${selectedBackground}')`;\n}\n\n// Initialize with default background\nupdatePostcardBackground();"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Add Message and Text Styling",
+        "description": "Implement functionality to update the postcard with the user's message text and apply styling changes (color, font, size) in real-time.",
+        "code": {
+          "file": "script.js",
+          "snippet": "// Message input functionality\nmessageInput.addEventListener('input', updatePostcardMessage);\n\n// Text styling events\ntextColor.addEventListener('input', updateTextStyle);\nfontFamily.addEventListener('change', updateTextStyle);\nfontSize.addEventListener('input', updateTextStyle);\n\n// Update the message on the postcard\nfunction updatePostcardMessage() {\n  const message = messageInput.value.trim() || 'Your message will appear here...';\n  postcardText.textContent = message;\n}\n\n// Update text styling\nfunction updateTextStyle() {\n  // Update font size display value\n  fontSizeValue.textContent = `${fontSize.value}px`;\n  \n  // Apply styles to postcard text\n  postcardText.style.color = textColor.value;\n  postcardText.style.fontFamily = fontFamily.value;\n  postcardText.style.fontSize = `${fontSize.value}px`;\n}\n\n// Initialize with default text styles\nupdateTextStyle();"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Create Confetti Animation",
+        "description": "Add a festive confetti animation that appears when the user clicks the 'Send Postcard' button.",
+        "code": {
+          "file": "script.js",
+          "snippet": "// Send button with confetti animation\nsendButton.addEventListener('click', () => {\n  createConfetti();\n  \n  // Show a sent message\n  alert('Your postcard has been sent! 🎉');\n});\n\n// Create confetti animation\nfunction createConfetti() {\n  // Clear any existing confetti\n  confettiContainer.innerHTML = '';\n  confettiContainer.style.display = 'block';\n  \n  // Generate random number of confetti pieces (between 50 and 100)\n  const confettiCount = Math.floor(Math.random() * 51) + 50;\n  \n  // Colors for confetti\n  const colors = [\n    '#f44336', '#e91e63', '#9c27b0', '#673ab7', \n    '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',\n    '#009688', '#4caf50', '#8bc34a', '#cddc39', \n    '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'\n  ];\n  \n  // Create the confetti pieces\n  for (let i = 0; i < confettiCount; i++) {\n    const confetti = document.createElement('div');\n    confetti.className = 'confetti';\n    \n    // Random position\n    const startPositionLeft = Math.random() * 100;\n    \n    // Random color\n    const color = colors[Math.floor(Math.random() * colors.length)];\n    \n    // Random rotation speed\n    const rotationSpeed = Math.random() * 360;\n    \n    // Random size\n    const size = Math.floor(Math.random() * 10) + 5;\n    \n    // Random animation delay\n    const delay = Math.random() * 2;\n    \n    // Apply styles\n    confetti.style.backgroundColor = color;\n    confetti.style.left = `${startPositionLeft}%`;\n    confetti.style.width = `${size}px`;\n    confetti.style.height = `${size}px`;\n    confetti.style.animationDelay = `${delay}s`;\n    confetti.style.animationDuration = `${3 + Math.random() * 2}s`; // Between 3-5s\n    \n    // Add to container\n    confettiContainer.appendChild(confetti);\n  }\n  \n  // Remove confetti after animation is complete\n  setTimeout(() => {\n    confettiContainer.style.display = 'none';\n  }, 5000);\n}"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Implement Postcard Download Functionality",
+        "description": "Use the html2canvas library to capture the postcard as an image and allow users to download it.",
+        "code": {
+          "file": "script.js",
+          "snippet": "// Download button functionality\ndownloadButton.addEventListener('click', () => {\n  // Check if a message has been entered\n  if (messageInput.value.trim() === '') {\n    alert('Please enter a message for your postcard before downloading.');\n    return;\n  }\n  \n  // Use html2canvas to convert the postcard to an image\n  html2canvas(postcardElement).then(canvas => {\n    // Create an image data URL\n    const imageData = canvas.toDataURL('image/png');\n    \n    // Create a temporary link element\n    const link = document.createElement('a');\n    link.href = imageData;\n    link.download = 'my-digital-postcard.png';\n    \n    // Trigger download\n    document.body.appendChild(link);\n    link.click();\n    document.body.removeChild(link);\n  }).catch(error => {\n    console.error('Error generating postcard image:', error);\n    alert('Sorry, there was an error creating your postcard image. Please try again.');\n  });\n});\n\n// Initialize the postcard with default values\nupdatePostcardBackground();\nupdatePostcardMessage();\nupdateTextStyle();\n\n// Add selected class to the first background option by default\nbgOptions[0].classList.add('selected');"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Complete and Test Your Application",
+        "description": "Combine all code, test each feature, and fix any issues. Make sure all functions work correctly: background selection, message customization, styling, confetti animation, and download functionality.",
+        "code": {
+          "file": "final-script.js",
+          "snippet": "// DOM Elements\nconst bgOptions = document.querySelectorAll('.bg-option');\nconst postcardElement = document.getElementById('postcard');\nconst messageInput = document.getElementById('postcard-message');\nconst postcardText = document.getElementById('postcard-text');\nconst textColor = document.getElementById('text-color');\nconst fontFamily = document.getElementById('font-family');\nconst fontSize = document.getElementById('font-size');\nconst fontSizeValue = document.getElementById('font-size-value');\nconst sendButton = document.getElementById('send-button');\nconst downloadButton = document.getElementById('download-button');\nconst confettiContainer = document.getElementById('confetti-container');\n\n// Initial selected background (beach)\nlet selectedBackground = 'beach.jpg';\n\n// Background selection\nbgOptions.forEach(option => {\n  option.addEventListener('click', () => {\n    // Remove selected class from all options\n    bgOptions.forEach(opt => opt.classList.remove('selected'));\n    \n    // Add selected class to clicked option\n    option.classList.add('selected');\n    \n    // Get the background image filename\n    selectedBackground = option.getAttribute('data-bg');\n    \n    // Update the postcard background\n    updatePostcardBackground();\n  });\n});\n\n// Set initial selected background\nbgOptions[0].classList.add('selected');\n\n// Message input functionality\nmessageInput.addEventListener('input', updatePostcardMessage);\n\n// Text styling events\ntextColor.addEventListener('input', updateTextStyle);\nfontFamily.addEventListener('change', updateTextStyle);\nfontSize.addEventListener('input', updateTextStyle);\n\n// Send button with confetti animation\nsendButton.addEventListener('click', () => {\n  createConfetti();\n  \n  // Show a sent message\n  alert('Your postcard has been sent! 🎉');\n});\n\n// Download button functionality\ndownloadButton.addEventListener('click', () => {\n  // Check if a message has been entered\n  if (messageInput.value.trim() === '') {\n    alert('Please enter a message for your postcard before downloading.');\n    return;\n  }\n  \n  // Use html2canvas to convert the postcard to an image\n  html2canvas(postcardElement).then(canvas => {\n    // Create an image data URL\n    const imageData = canvas.toDataURL('image/png');\n    \n    // Create a temporary link element\n    const link = document.createElement('a');\n    link.href = imageData;\n    link.download = 'my-digital-postcard.png';\n    \n    // Trigger download\n    document.body.appendChild(link);\n    link.click();\n    document.body.removeChild(link);\n  }).catch(error => {\n    console.error('Error generating postcard image:', error);\n    alert('Sorry, there was an error creating your postcard image. Please try again.');\n  });\n});\n\n// Update the postcard background image\nfunction updatePostcardBackground() {\n  postcardElement.style.backgroundImage = `url('images/${selectedBackground}')`;\n}\n\n// Update the message on the postcard\nfunction updatePostcardMessage() {\n  const message = messageInput.value.trim() || 'Your message will appear here...';\n  postcardText.textContent = message;\n}\n\n// Update text styling\nfunction updateTextStyle() {\n  // Update font size display value\n  fontSizeValue.textContent = `${fontSize.value}px`;\n  \n  // Apply styles to postcard text\n  postcardText.style.color = textColor.value;\n  postcardText.style.fontFamily = fontFamily.value;\n  postcardText.style.fontSize = `${fontSize.value}px`;\n}\n\n// Create confetti animation\nfunction createConfetti() {\n  // Clear any existing confetti\n  confettiContainer.innerHTML = '';\n  confettiContainer.style.display = 'block';\n  \n  // Generate random number of confetti pieces (between 50 and 100)\n  const confettiCount = Math.floor(Math.random() * 51) + 50;\n  \n  // Colors for confetti\n  const colors = [\n    '#f44336', '#e91e63', '#9c27b0', '#673ab7', \n    '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',\n    '#009688', '#4caf50', '#8bc34a', '#cddc39', \n    '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'\n  ];\n  \n  // Create the confetti pieces\n  for (let i = 0; i < confettiCount; i++) {\n    const confetti = document.createElement('div');\n    confetti.className = 'confetti';\n    \n    // Random position\n    const startPositionLeft = Math.random() * 100;\n    \n    // Random color\n    const color = colors[Math.floor(Math.random() * colors.length)];\n    \n    // Random size\n    const size = Math.floor(Math.random() * 10) + 5;\n    \n    // Random animation delay\n    const delay = Math.random() * 2;\n    \n    // Apply styles\n    confetti.style.backgroundColor = color;\n    confetti.style.left = `${startPositionLeft}%`;\n    confetti.style.width = `${size}px`;\n    confetti.style.height = `${size}px`;\n    confetti.style.animationDelay = `${delay}s`;\n    confetti.style.animationDuration = `${3 + Math.random() * 2}s`; // Between 3-5s\n    \n    // Add to container\n    confettiContainer.appendChild(confetti);\n  }\n  \n  // Remove confetti after animation is complete\n  setTimeout(() => {\n    confettiContainer.style.display = 'none';\n  }, 5000);\n}\n\n// Initialize the postcard with default values\nupdatePostcardBackground();\nupdatePostcardMessage();\nupdateTextStyle();"
+        }
+      },
+      {
+        "step": 9,
+        "title": "Add Enhancements and Personal Touches",
+        "description": "Enhance your project with additional features like postcard borders, stamps, or custom filters to make it more engaging and personalized.",
+        "code": {
+          "file": "enhancements.js",
+          "snippet": "// Add these functions to your script.js file\n\n// 1. Create a toggle for postcard borders\nconst borderToggle = document.createElement('div');\nborderToggle.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Border Style</h3>\n    <div class=\"control-group\">\n      <label for=\"border-toggle\">Add Border:</label>\n      <input type=\"checkbox\" id=\"border-toggle\">\n    </div>\n    <div class=\"control-group\">\n      <label for=\"border-color\">Border Color:</label>\n      <input type=\"color\" id=\"border-color\" value=\"#ffffff\">\n    </div>\n  </div>\n`;\n\n// Insert border toggle before action buttons\ndocument.querySelector('.action-buttons').before(borderToggle);\n\n// Get new DOM elements\nconst borderToggleInput = document.getElementById('border-toggle');\nconst borderColorInput = document.getElementById('border-color');\n\n// Event listeners for border controls\nborderToggleInput.addEventListener('change', updateBorder);\nborderColorInput.addEventListener('input', updateBorder);\n\n// Update border function\nfunction updateBorder() {\n  if (borderToggleInput.checked) {\n    postcardElement.style.border = `10px solid ${borderColorInput.value}`;\n  } else {\n    postcardElement.style.border = 'none';\n  }\n}\n\n// 2. Add a vintage filter toggle\nconst filterToggle = document.createElement('div');\nfilterToggle.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Image Filter</h3>\n    <div class=\"control-group\">\n      <label for=\"filter-select\">Filter:</label>\n      <select id=\"filter-select\">\n        <option value=\"none\">None</option>\n        <option value=\"sepia\">Vintage</option>\n        <option value=\"grayscale\">Black & White</option>\n        <option value=\"brightness\">Bright</option>\n        <option value=\"contrast\">High Contrast</option>\n      </select>\n    </div>\n  </div>\n`;\n\n// Insert filter toggle after background options\ndocument.querySelector('.background-options').parentNode.after(filterToggle);\n\n// Get filter select element\nconst filterSelect = document.getElementById('filter-select');\n\n// Event listener for filter\nfilterSelect.addEventListener('change', updateFilter);\n\n// Update filter function\nfunction updateFilter() {\n  const filter = filterSelect.value;\n  \n  // Reset all filters\n  postcardElement.style.filter = 'none';\n  \n  // Apply selected filter\n  switch (filter) {\n    case 'sepia':\n      postcardElement.style.filter = 'sepia(0.7)';\n      break;\n    case 'grayscale':\n      postcardElement.style.filter = 'grayscale(1)';\n      break;\n    case 'brightness':\n      postcardElement.style.filter = 'brightness(1.3)';\n      break;\n    case 'contrast':\n      postcardElement.style.filter = 'contrast(1.5)';\n      break;\n  }\n}\n\n// 3. Add decorative stamp option\nconst stampOption = document.createElement('div');\nstampOption.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Add Stamp</h3>\n    <div class=\"stamp-options\">\n      <button class=\"stamp-btn\" data-stamp=\"stamp1\">✈️</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp2\">🌍</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp3\">💌</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp4\">🏙️</button>\n      <button class=\"stamp-btn\" data-stamp=\"none\">None</button>\n    </div>\n  </div>\n`;\n\n// Insert stamp option before action buttons\ndocument.querySelector('.action-buttons').before(stampOption);\n\n// Add styles for stamps\nconst stampStyles = document.createElement('style');\nstampStyles.textContent = `\n  .stamp-options {\n    display: flex;\n    gap: 10px;\n    margin-top: 10px;\n  }\n  \n  .stamp-btn {\n    font-size: 24px;\n    width: 50px;\n    height: 50px;\n    padding: 5px;\n    background-color: #f8f8f8;\n    color: #333;\n  }\n  \n  .stamp {\n    position: absolute;\n    top: 20px;\n    right: 20px;\n    font-size: 40px;\n    transform: rotate(15deg);\n    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));\n  }\n`;\ndocument.head.appendChild(stampStyles);\n\n// Stamp buttons event listeners\ndocument.querySelectorAll('.stamp-btn').forEach(btn => {\n  btn.addEventListener('click', () => {\n    // Remove existing stamp if any\n    const existingStamp = postcardElement.querySelector('.stamp');\n    if (existingStamp) {\n      existingStamp.remove();\n    }\n    \n    // Add new stamp if not 'none'\n    const stampType = btn.getAttribute('data-stamp');\n    if (stampType !== 'none') {\n      const stamp = document.createElement('div');\n      stamp.className = 'stamp';\n      \n      // Set emoji based on stamp type\n      switch (stampType) {\n        case 'stamp1':\n          stamp.textContent = '✈️';\n          break;\n        case 'stamp2':\n          stamp.textContent = '🌍';\n          break;\n        case 'stamp3':\n          stamp.textContent = '💌';\n          break;\n        case 'stamp4':\n          stamp.textContent = '🏙️';\n          break;\n      }\n      \n      postcardElement.appendChild(stamp);\n    }\n  });\n});"
+    }}
+        ]},
+  {
+    "id": "emoji-mood-tracker",
+    "name": "Emoji Mood Tracker",
+    "icon": "Laugh",
+    "description": "Each day, users click an emoji that represents their mood. Mood history is saved in localStorage and displayed in a calendar grid.",
+    "difficulty": "Beginner",
+    "category": "React",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Create HTML Layout",
+        "description": "Set up a basic structure with a title, emoji options, and a calendar grid.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<h1>Emoji Mood Tracker</h1>\n<div class=\"emoji-picker\">\n  <button data-mood=\"happy\">😊</button>\n  <button data-mood=\"neutral\">😐</button>\n  <button data-mood=\"sad\">😢</button>\n</div>\n<div class=\"calendar-grid\" id=\"calendar\"></div>"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Style the Calendar and Emojis",
+        "description": "Use CSS to create a responsive and visually appealing calendar grid.",
+        "code": {
+          "file": "style.css",
+          "snippet": ".emoji-picker button { font-size: 2em; margin: 10px; cursor: pointer; }\n.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin: 20px; }\n.calendar-grid div { border: 1px solid #ccc; padding: 10px; height: 50px; font-size: 1.5em; }"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Track Mood Selection and Store in localStorage",
+        "description": "Handle emoji clicks, store mood data with the current date in localStorage, and re-render the calendar.",
+        "code": {
+          "file": "script.js",
+          "snippet": "document.querySelectorAll('.emoji-picker button').forEach(btn => {\n  btn.addEventListener('click', () => {\n    const mood = btn.dataset.mood;\n    const today = new Date().toISOString().split('T')[0];\n    localStorage.setItem(today, mood);\n    renderCalendar();\n  });\n});\n\nfunction renderCalendar() {\n  const calendar = document.getElementById('calendar');\n  calendar.innerHTML = '';\n  const days = 30;\n  const today = new Date();\n  for (let i = 0; i < days; i++) {\n    const date = new Date(today);\n    date.setDate(today.getDate() - i);\n    const dateStr = date.toISOString().split('T')[0];\n    const mood = localStorage.getItem(dateStr) || '';\n    const cell = document.createElement('div');\n    cell.textContent = mood;\n    calendar.appendChild(cell);\n  }\n}\nrenderCalendar();"
+        }
+      }
+    ]
+  },
+  {
+    "id": "typewriter-text-animation",
+    "name": "Typewriter Text Animation ",
+    "icon": "Keyboard",
+    "description": "Create a landing page that types out words/phrases one letter at a time. Bonus: Randomize phrases from a list.",
+    "difficulty": "Beginner",
+    "category": "Web Development",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Basic HTML Structure",
+        "description": "Add a heading placeholder where the typed text will appear.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<div class=\"typewriter-container\">\n  <h1 id=\"typewriter\"></h1>\n</div>"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Add Typing Animation Styles",
+        "description": "Create a blinking cursor and center the text.",
+        "code": {
+          "file": "style.css",
+          "snippet": "body { display: flex; justify-content: center; align-items: center; height: 100vh; font-family: monospace; background: #f0f0f0; }\n.typewriter-container h1::after { content: '|'; animation: blink 1s infinite; }\n@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Implement Typewriter Effect in JavaScript",
+        "description": "Create a function to type out and delete phrases one by one, from a randomized list.",
+        "code": {
+          "file": "script.js",
+          "snippet": "const phrases = [\"Welcome to My Site\", \"Learn JavaScript\", \"Create Amazing UIs\"];\nlet i = 0, j = 0, currentPhrase = [], isDeleting = false;\nlet typewriter = document.getElementById(\"typewriter\");\nfunction loop() {\n  typewriter.textContent = currentPhrase.join(\"\");\n  if (i < phrases.length) {\n    if (!isDeleting && j <= phrases[i].length) {\n      currentPhrase.push(phrases[i][j]); j++;\n    }\n    if (isDeleting && j > 0) {\n      currentPhrase.pop(); j--;\n    }\n    if (j === phrases[i].length) isDeleting = true;\n    if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % phrases.length; }\n  }\n  setTimeout(loop, isDeleting ? 50 : 100);\n}\nloop();"
+        }
+      }
+    ]
+  },
+  {
+    "id": "simple-music-visualizer",
+    "name": "Simple Music Visualizer ",
+    "icon": "Music",
+    "description": "Play an audio file and animate bars or shapes that respond to the audio volume/frequency using the HTML5 audio and Canvas API.",
+    "difficulty": "Intermediate",
+    "category": "Web Development",
+    "steps": [
+      {
+        "step": 1,
+        "title": "HTML with Audio and Canvas",
+        "description": "Add an HTML audio player and a canvas element for the visualization.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<audio id=\"audio\" controls src=\"your-audio-file.mp3\"></audio>\n<canvas id=\"visualizer\"></canvas>"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Style Canvas",
+        "description": "Add CSS to style the canvas element appropriately.",
+        "code": {
+          "file": "style.css",
+          "snippet": "body { margin: 0; background: #000; }\ncanvas { display: block; width: 100%; height: 300px; }"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Set Up Web Audio API",
+        "description": "Use JavaScript and the Web Audio API to get frequency data from the audio and visualize it on the canvas.",
+        "code": {
+          "file": "script.js",
+          "snippet": "const audio = document.getElementById('audio');\nconst canvas = document.getElementById('visualizer');\nconst ctx = canvas.getContext('2d');\nconst audioCtx = new (window.AudioContext || window.webkitAudioContext)();\nconst source = audioCtx.createMediaElementSource(audio);\nconst analyser = audioCtx.createAnalyser();\nsource.connect(analyser);\nanalyser.connect(audioCtx.destination);\nanalyser.fftSize = 64;\nconst bufferLength = analyser.frequencyBinCount;\nconst dataArray = new Uint8Array(bufferLength);\n\nfunction draw() {\n  requestAnimationFrame(draw);\n  analyser.getByteFrequencyData(dataArray);\n  ctx.clearRect(0, 0, canvas.width, canvas.height);\n  for (let i = 0; i < bufferLength; i++) {\n    const barHeight = dataArray[i];\n    ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';\n    ctx.fillRect(i * 10, canvas.height - barHeight, 8, barHeight);\n  }\n}\naudio.onplay = () => audioCtx.resume().then(draw);"
+        }
+      }
+    ]
+  },
+  {
+    "id": "simple-music-visualizer-2",
+    "name": "Simple Music Visualizer",
+    "icon": "music",
+    "description": "A beginner-friendly project that teaches how to visualize audio using the Web Audio API and Canvas. Users upload a song, and the app displays animated bars that react to the music's volume and frequencies.",
+    "difficulty": "Intermediate",
+    "category": "Web Development",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Set up the Project Structure",
+        "description": "Create the foundational HTML, CSS, and JS files. The HTML includes an audio player, control buttons, and a canvas element. The CSS styles the app with a dark theme (common for audio apps), and the JS file will handle all the audio processing and visualization logic.",
+        "files": [
+          {
+            "file": "index.html",
+            "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Music Visualizer</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Music Visualizer</h1>\n    <div class=\"controls\">\n      <input type=\"file\" id=\"audio-upload\" accept=\"audio/*\">\n      <button id=\"play-btn\">Play</button>\n      <button id=\"pause-btn\">Pause</button>\n      <button id=\"stop-btn\">Stop</button>\n    </div>\n    <canvas id=\"visualizer\"></canvas>\n    <audio id=\"audio-element\"></audio>\n  </div>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+          },
+          {
+            "file": "style.css",
+            "content": "body {\n  font-family: Arial, sans-serif;\n  background-color: #121212;\n  color: white;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n}\n\n.container {\n  text-align: center;\n  width: 90%;\n  max-width: 800px;\n}\n\nh1 {\n  margin-bottom: 20px;\n}\n\n.controls {\n  margin-bottom: 20px;\n}\n\nbutton, input[type=\"file\"] {\n  background-color: #1DB954;\n  color: white;\n  border: none;\n  padding: 10px 15px;\n  margin: 0 5px;\n  border-radius: 20px;\n  cursor: pointer;\n  font-size: 14px;\n}\n\nbutton:hover {\n  background-color: #1ed760;\n}\n\ncanvas {\n  width: 100%;\n  background-color: #181818;\n  border-radius: 8px;\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);\n}"
+          },
+          {
+            "file": "script.js",
+            "content": "// Wait for the DOM to load\ndocument.addEventListener('DOMContentLoaded', () => {\n  const audioUpload = document.getElementById('audio-upload');\n  const playBtn = document.getElementById('play-btn');\n  const pauseBtn = document.getElementById('pause-btn');\n  const stopBtn = document.getElementById('stop-btn');\n  const audioElement = document.getElementById('audio-element');\n  const canvas = document.getElementById('visualizer');\n  const ctx = canvas.getContext('2d');\n\n  // Set canvas size\n  canvas.width = canvas.offsetWidth;\n  canvas.height = 300;\n\n  // Audio context and analyser\n  let audioContext;\n  let analyser;\n  let dataArray;\n  let source;\n  let isPlaying = false;\n\n  // Handle window resize\n  window.addEventListener('resize', () => {\n    canvas.width = canvas.offsetWidth;\n  });\n\n  // Handle audio file upload\naudioUpload.addEventListener('change', (e) => {\n  const file = e.target.files[0];\n  if (file) {\n    const url = URL.createObjectURL(file);\n    audioElement.src = url;\n    \n    // Initialize audio context on first interaction\n    if (!audioContext) {\n      setupAudioContext();\n    }\n  }\n});\n\n// Play button\nplayBtn.addEventListener('click', () => {\n  if (audioElement.src && !isPlaying) {\n    audioElement.play();\n    isPlaying = true;\n    animate();\n  }\n});\n\n// Pause button\npauseBtn.addEventListener('click', () => {\n  audioElement.pause();\n  isPlaying = false;\n});\n\n// Stop button\nstopBtn.addEventListener('click', () => {\n  audioElement.pause();\n  audioElement.currentTime = 0;\n  isPlaying = false;\n  // Clear the canvas\n  ctx.clearRect(0, 0, canvas.width, canvas.height);\n});\n\n// Set up audio context and analyser\nfunction setupAudioContext() {\n  audioContext = new (window.AudioContext || window.webkitAudioContext)();\n  analyser = audioContext.createAnalyser();\n  source = audioContext.createMediaElementSource(audioElement);\n  source.connect(analyser);\n  analyser.connect(audioContext.destination);\n  analyser.fftSize = 256;\n  \n  const bufferLength = analyser.frequencyBinCount;\n  dataArray = new Uint8Array(bufferLength);\n}\n\n// Animation loop\nfunction animate() {\n  if (!isPlaying) return;\n  \n  requestAnimationFrame(animate);\n  \n  analyser.getByteFrequencyData(dataArray);\n  \n  // Clear canvas\n  ctx.fillStyle = '#181818';\n  ctx.fillRect(0, 0, canvas.width, canvas.height);\n  \n  // Draw frequency bars\n  const barWidth = (canvas.width / dataArray.length) * 2.5;\n  let x = 0;\n  \n  for (let i = 0; i < dataArray.length; i++) {\n    const barHeight = dataArray[i] / 2;\n    \n    // Create gradient\n    const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);\n    gradient.addColorStop(0, '#1DB954');\n    gradient.addColorStop(1, '#121212');\n    \n    ctx.fillStyle = gradient;\n    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);\n    \n    x += barWidth + 1;\n  }\n}\n});"
+          }
+        ]
+      },
+      {
+        "step": 2,
+        "title": "Create Audio Controls and Canvas",
+        "description": "The HTML structure includes:\n- A file input (`<input type='file'>`) to upload audio files (MP3, WAV, etc.).\n- Play/Pause/Stop buttons to control playback.\n- A hidden `<audio>` element (the actual audio player).\n- A `<canvas>` element where the visualizer will draw.\n\n**Key Concept**: The `<audio>` element handles playback, while the Canvas API draws the visuals.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<div class=\"controls\">\n  <input type=\"file\" id=\"audio-upload\" accept=\"audio/*\">\n  <button id=\"play-btn\">Play</button>\n  <button id=\"pause-btn\">Pause</button>\n  <button id=\"stop-btn\">Stop</button>\n</div>\n<canvas id=\"visualizer\"></canvas>\n<audio id=\"audio-element\"></audio>"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Style the Visualizer",
+        "description": "The CSS gives the app a modern look:\n- Dark background (`#121212`) for better visual contrast.\n- Green accent buttons (inspired by music apps like Spotify).\n- Canvas styled to fill the available space with a subtle shadow.\n\n**Why?** Dark themes reduce eye strain and make colorful visualizations pop.",
+        "code": {
+          "file": "style.css",
+          "snippet": "canvas {\n  width: 100%;\n  background-color: #181818; /* Slightly lighter than body for contrast */\n  border-radius: 8px;\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);\n}"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Initialize the Web Audio API",
+        "description": "The JavaScript sets up:\n1. **AudioContext**: The 'engine' of the Web Audio API.\n2. **AnalyserNode**: Extracts frequency/volume data from the audio.\n3. **MediaElementSource**: Connects the `<audio>` element to the Analyser.\n\n**Key Concept**: The AnalyserNode converts audio into numerical data (like a soundwave graph) that we can visualize.",
+        "code": {
+          "file": "script.js",
+          "snippet": "let audioContext, analyser, dataArray;\n\nfunction setupAudioContext() {\n  // Create AudioContext (browser's audio processing engine)\n  audioContext = new (window.AudioContext || window.webkitAudioContext)();\n  \n  // AnalyserNode gives us real-time frequency data\n  analyser = audioContext.createAnalyser();\n  \n  // Connect the audio element to the analyser\n  const source = audioContext.createMediaElementSource(audioElement);\n  source.connect(analyser);\n  analyser.connect(audioContext.destination); // Send sound to speakers\n  \n  analyser.fftSize = 256; // Determines how detailed the frequency data is\n  \n  // dataArray will store the frequency data (0-255 values)\n  const bufferLength = analyser.frequencyBinCount;\n  dataArray = new Uint8Array(bufferLength);\n}"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Handle Audio Upload",
+        "description": "When a user uploads an audio file:\n1. Convert the file to a playable URL using `URL.createObjectURL()`.\n2. Set this URL as the `<audio>` element's source.\n3. Initialize the AudioContext on first interaction (browsers require this due to autoplay policies).\n\n**Why `createObjectURL`?** It creates a temporary link to the user's file without needing to upload it to a server.",
+        "code": {
+          "file": "script.js",
+          "snippet": "audioUpload.addEventListener('change', (e) => {\n  const file = e.target.files[0];\n  if (file) {\n    // Create a playable URL from the uploaded file\n    const url = URL.createObjectURL(file);\n    audioElement.src = url;\n    \n    // Initialize audio context on first interaction (browser security rule)\n    if (!audioContext) {\n      setupAudioContext();\n    }\n  }\n});"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Animate the Visualizer",
+        "description": "The core visualization logic:\n1. **`requestAnimationFrame`**: Creates a smooth 60fps animation loop.\n2. **`analyser.getByteFrequencyData()`**: Fills `dataArray` with frequency values (0-255).\n3. **Draw Bars**: For each frequency value, draw a vertical bar whose height corresponds to its intensity.\n\n**Pro Tip**: The loop clears and redraws the canvas every frame, creating animation.",
+        "code": {
+          "file": "script.js",
+          "snippet": "function animate() {\n  if (!isPlaying) return;\n  \n  // Schedule the next frame\n  requestAnimationFrame(animate);\n  \n  // Get frequency data into dataArray\n  analyser.getByteFrequencyData(dataArray);\n  \n  // Clear canvas\n  ctx.fillStyle = '#181818';\n  ctx.fillRect(0, 0, canvas.width, canvas.height);\n  \n  // Draw each frequency as a bar\n  const barWidth = (canvas.width / dataArray.length) * 2.5;\n  let x = 0;\n  \n  for (let i = 0; i < dataArray.length; i++) {\n    const barHeight = dataArray[i] / 2; // Scale down for canvas height\n    \n    // Create a gradient from green to dark\n    const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);\n    gradient.addColorStop(0, '#1DB954'); // Spotify green\n    gradient.addColorStop(1, '#121212');\n    \n    // Draw the bar\n    ctx.fillStyle = gradient;\n    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);\n    \n    x += barWidth + 1; // Add spacing between bars\n  }\n}"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Add Playback Controls",
+        "description": "Buttons control the audio element:\n- **Play**: Starts audio and the visualization loop.\n- **Pause**: Stops audio but keeps position.\n- **Stop**: Resets audio to start and clears the canvas.\n\n**Note**: The AudioContext must be resumed after user interaction (browser policy).",
+        "code": {
+          "file": "script.js",
+          "snippet": "playBtn.addEventListener('click', () => {\n  if (audioElement.src && !isPlaying) {\n    audioElement.play();\n    isPlaying = true;\n    \n    // Resume AudioContext if suspended (required by some browsers)\n    if (audioContext.state === 'suspended') {\n      audioContext.resume();\n    }\n    \n    animate(); // Start the visualization\n  }\n});\n\n// Pause button\npauseBtn.addEventListener('click', () => {\n  audioElement.pause();\n  isPlaying = false;\n});\n\n// Stop button\nstopBtn.addEventListener('click', () => {\n  audioElement.pause();\n  audioElement.currentTime = 0; // Rewind to start\n  isPlaying = false;\n  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas\n});"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Optional: Circular Visualizer",
+        "description": "An alternative visualization that displays frequencies in a circle:\n1. Uses `Math.sin()` and `Math.cos()` to position bars around a center point.\n2. Maps frequency values to colorful radial bars.\n\n**Teaching Moment**: This demonstrates how the same `dataArray` can be visualized differently!",
+        "code": {
+          "file": "script.js",
+          "snippet": "function drawCircleVisualization() {\n  analyser.getByteFrequencyData(dataArray);\n  ctx.clearRect(0, 0, canvas.width, canvas.height);\n  \n  const centerX = canvas.width / 2;\n  const centerY = canvas.height / 2;\n  const radius = Math.min(canvas.width, canvas.height) * 0.4;\n  \n  for (let i = 0; i < dataArray.length; i++) {\n    const angle = (i * Math.PI * 2) / dataArray.length; // Position in circle\n    const value = dataArray[i] / 255; // Normalize to 0-1\n    \n    // Calculate bar coordinates\n    const x = centerX + Math.cos(angle) * radius;\n    const y = centerY + Math.sin(angle) * radius;\n    \n    // Draw a circle whose size and color change with frequency\n    ctx.beginPath();\n    ctx.arc(x, y, value * 10, 0, Math.PI * 2);\n    ctx.fillStyle = `hsl(${value * 360}, 100%, 50%)`; // Rainbow colors\n    ctx.fill();\n  }\n}"
+        }
+      }
+    ]
+  }
+  ]

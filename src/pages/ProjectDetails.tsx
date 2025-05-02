@@ -1,12 +1,11 @@
-
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getProjectById, Project, Step } from '@/data/projects';
-import { Button } from '@/components/ui/button';
-import ProjectStep from '@/components/ProjectStep';
-import { ArrowLeft, Info } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getProjectById, Project, Step } from "data/NIUprojects";
+import { Button } from "@/components/ui/button";
+import ProjectStep from "@/components/ProjectStep";
+import { ArrowLeft, Info } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 const ProjectDetails = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -14,12 +13,12 @@ const ProjectDetails = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [activeStepId, setActiveStepId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     // Simulate API call with a small delay
     const fetchProject = async () => {
       setLoading(true);
-      
+
       setTimeout(() => {
         if (projectId) {
           const foundProject = getProjectById(projectId);
@@ -34,14 +33,14 @@ const ProjectDetails = () => {
         setLoading(false);
       }, 500);
     };
-    
+
     fetchProject();
   }, [projectId]);
-  
+
   const toggleStep = (stepId: string) => {
     setActiveStepId(activeStepId === stepId ? null : stepId);
   };
-  
+
   if (loading) {
     return (
       <div className="container min-h-screen flex items-center justify-center">
@@ -52,7 +51,7 @@ const ProjectDetails = () => {
       </div>
     );
   }
-  
+
   if (!project) {
     return (
       <div className="container min-h-screen flex items-center justify-center">
@@ -62,49 +61,49 @@ const ProjectDetails = () => {
           <p className="text-muted-foreground mb-6">
             We couldn't find the project you're looking for.
           </p>
-          <Button onClick={() => navigate("/")}>
-            Back to Home
-          </Button>
+          <Button onClick={() => navigate("/")}>Back to Home</Button>
         </div>
       </div>
     );
   }
-  
+
   return (
     <div className="container py-8 px-4 min-h-screen">
-      <Button 
-        variant="ghost" 
-        className="mb-6"
-        onClick={() => navigate("/")}
-      >
+      <Button variant="ghost" className="mb-6" onClick={() => navigate("/")}>
         <ArrowLeft className="h-4 w-4 mr-2" /> Back to Projects
       </Button>
-      
+
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
           <div className="flex flex-wrap gap-2 justify-between items-start mb-2">
             <h1 className="text-3xl font-bold">{project.title}</h1>
             <div className="flex gap-2">
-              <Badge variant="outline" className="capitalize">{project.category}</Badge>
-              <Badge variant={
-                project.difficulty === 'beginner' ? 'default' : 
-                project.difficulty === 'intermediate' ? 'secondary' : 
-                'outline'
-              }>
+              <Badge variant="outline" className="capitalize">
+                {project.category}
+              </Badge>
+              <Badge
+                variant={
+                  project.difficulty === "beginner"
+                    ? "default"
+                    : project.difficulty === "intermediate"
+                    ? "secondary"
+                    : "outline"
+                }
+              >
                 {project.difficulty}
               </Badge>
             </div>
           </div>
           <p className="text-muted-foreground">{project.description}</p>
         </header>
-        
+
         <Separator className="my-6" />
-        
+
         <section>
           <h2 className="text-xl font-semibold mb-6">Project Steps</h2>
           <div className="space-y-4">
             {project.steps.map((step) => (
-              <ProjectStep 
+              <ProjectStep
                 key={step.id}
                 step={step}
                 isActive={activeStepId === step.id}
