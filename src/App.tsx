@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import ProjectDetails from "./pages/ProjectDetails";
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./routes/ProjectDetail";
+import FreeProjects from './pages/FreeProjects'
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           {/*<Route path="/project/:projectId" element={<ProjectDetails />} />*/}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
+          <Route path='/projects' element={<FreeProjects/>} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

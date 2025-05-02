@@ -13,6 +13,11 @@ import {
   Trophy,
   LogIn,
   UserPlus,
+  ArrowRight,
+  Star,
+  Clock,
+  BookOpen,
+  SquarePi
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,42 +39,22 @@ const Index = () => {
     useProjectData();
   const navigate = useNavigate();
 
-  /*useEffect(() => {
-    setProjects(allProjects);
-    console.log(allProjects);
-  }, []);*/
-
-  /*useEffect(() => {
-    fetch("data/htmlcssjsprojects.json")
-      .then((response) => response.json())
-      .then((data) => setProjects(data));
-  }, []);*/
-
   const handleProjectClick = (projectId) => {
     navigate(`/projects/${projectId}`);
   };
 
-  /*const openHtmlProjects = async () => {
-    const response = await fetch("data/htmlcssjsprojects.json", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setProjectData(data.project);
-  };*/
-
-  /*useEffect(() => {
-    openHtmlProjects();
-  }, []);*/
-  // Fetch project data when the component mounts
+  const handleBrowseFreeClicked =()=> {
+    navigate('/projects')
+  }
 
   return (
-    <div className="container min-h-screen py-8 px-4">
+    <div className="container min-h-screen mx-auto py-8 px-4">
+      {/* Navigation */}
       <div className="flex justify-between items-center mb-12">
-        <div></div> {/* Empty div for flex spacing */}
+        <div className="flex items-center gap-2">
+          <Code2 className="h-6 w-6 text-primary" />
+          <span className="font-semibold">CodeCraft</span>
+        </div>
         <div className="flex gap-4">
           <Button variant="outline" size="sm" className="gap-2">
             <LogIn className="h-4 w-4" />
@@ -81,6 +66,8 @@ const Index = () => {
           </Button>
         </div>
       </div>
+
+      {/* Hero Section */}
       <header className="text-center my-12">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center">
@@ -90,150 +77,142 @@ const Index = () => {
         <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
           Code Craft Incubator
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
           Master practical skills by building real projects. Each project is
           broken down into clear, actionable steps with examples.
         </p>
       </header>
 
-      <section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-4 mt-4">
-          Ready to start coding?
-        </h2>
-        <p className="text-center text-muted-foreground mb-8">
-          Choose your technology stack and generate project ideas to start
-          building.
-        </p>
-        {/*<ProjectIdeas />*/}
+      <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <Button onClick={handleBrowseFreeClicked} size="lg" className="gap-2">
+            <BookOpen  className="h-4 w-4" />
+            Browse Free Projects
+          </Button>
+          <Button variant="outline" size="lg" className="gap-2">
+            <UserPlus className="h-4 w-4" />
+            Sign Up for More
+          </Button>
+        </div>
 
-        <ProjectPicker />
-      </section>
-      <ListedProjects projects={projects} />
-      {/*<section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-6">
-          Explore Projects
+
+      {/* Project Types Section */}
+      <section className="py-12">
+        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">
+          Explore Our Project Categories
         </h2>
-        <div className="max-w-2xl mx-auto space-y-3">
-          {allProjects.map((proj) => (
-            <div
-              key={proj.id}
-              onClick={() => handleProjectClick(proj.id)}
-              className="cursor-pointer bg-white p-4 border box-shadow hover:bg-blue-50 transition text-center"
-            >
-              {proj.name}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-blue-500/10 rounded-lg">
+                <SquarePi className="h-5 w-5 text-blue-500" />
+              </div>
+              <h3 className="font-semibold">Python Projects</h3>
             </div>
-          ))}
-        </div>
-      </section>*/}
-      {/*{projectData && (
-        <section>
-          <DetailedProjectViewer projectData={projectData} />
-        </section>
-      )}*/}
-      <section className="">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mt-4 mb-4">
-          Why Build Projects?
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Rocket className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Learn by Doing</CardTitle>
-              <CardDescription>
-                Practical experience is the fastest way to master programming
-                concepts
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              Build real applications that you can showcase in your portfolio
-              and to potential employers
-            </CardContent>
-          </Card>
-
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Book className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Structured Learning</CardTitle>
-              <CardDescription>
-                Follow clear, step-by-step instructions with practical examples
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              No more getting stuck or feeling lost. Each project breaks down
-              complex concepts into manageable steps
-            </CardContent>
-          </Card>
-
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Target className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Build Your Portfolio</CardTitle>
-              <CardDescription>
-                Create impressive projects that demonstrate your skills
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              Stand out to employers with a portfolio of real-world projects
-              that showcase your abilities
-            </CardContent>
-          </Card>
-
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Layout className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Frontend Skills</CardTitle>
-              <CardDescription>
-                Master HTML, CSS, and JavaScript through hands-on practice
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              Create responsive, interactive user interfaces using modern web
-              technologies
-            </CardContent>
-          </Card>
-
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Globe className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Full Stack Development</CardTitle>
-              <CardDescription>
-                Build complete applications from frontend to backend
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              Learn to work with databases, APIs, and server-side code in
-              real-world scenarios
-            </CardContent>
-          </Card>
-
-          <Card className="border-primary/20 bg-card/50 backdrop-blur">
-            <CardHeader>
-              <Trophy className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Gain Confidence</CardTitle>
-              <CardDescription>
-                Build your confidence through successful project completion
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              Track your progress and see your skills improve with each
-              completed project
-            </CardContent>
-          </Card>
+            <p className="text-muted-foreground">
+              Build automation scripts, data analysis tools, and web applications with Python.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-green-500/10 rounded-lg">
+                <Layout className="h-5 w-5 text-green-500" />
+              </div>
+              <h3 className="font-semibold">Web Development</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Create beautiful, responsive websites using HTML, CSS, and JavaScript.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-purple-500/10 rounded-lg">
+                <Code2 className="h-5 w-5 text-purple-500" />
+              </div>
+              <h3 className="font-semibold">React Projects</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Develop modern, interactive user interfaces with React.js.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-orange-500/10 rounded-lg">
+                <Globe className="h-5 w-5 text-orange-500" />
+              </div>
+              <h3 className="font-semibold">Full Stack</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Build complete applications with frontend and backend integration.
+            </p>
+          </div>
         </div>
       </section>
-      {/*<section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12">
-          Explore Project Ideas
-        </h2>
 
-        <DetailedProjectViewer projectData={projectData} />
-        <p className="text-center text-muted-foreground mb-8">
-          Explore a variety of project ideas and choose the ones that excite you
-          the most. Each project is designed to help you learn and grow as a
-          developer.
-        </p>
-      </section>*/}
+      {/* Features Section */}
+      <section className="py-12">
+      <h2 className="text-2xl md:text-3xl text-center font-semibold mb-4">
+          Why Code Craft Incubator?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="p-6 rounded-lg bg-card border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Star className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-semibold">Project-Based Learning</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Learn by doing with real-world projects that build your portfolio and skills.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg bg-card border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Clock className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-semibold">Step-by-Step Guidance</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Clear instructions and examples for every step of your coding journey.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg bg-card border">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Trophy className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-semibold">Skill Progression</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Start with basics and advance to complex projects at your own pace.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      
+
+      {/* Stats Section */}
+      <section className="py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
+          <div>
+            <div className="text-3xl font-bold text-primary">100+</div>
+            <div className="text-muted-foreground">Projects</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-primary">50k+</div>
+            <div className="text-muted-foreground">Developers</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-primary">4</div>
+            <div className="text-muted-foreground">Categories</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-primary">24/7</div>
+            <div className="text-muted-foreground">Support</div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

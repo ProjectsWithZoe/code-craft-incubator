@@ -290,5 +290,106 @@
         }
       }
     ]
-  }
+  },
+  {"id": "weather-dashboard",
+    "name": "Simple Weather Dashboard",
+    "description": "A beginner-friendly project that teaches how to visualize weather using data obtained from an external API ",
+    "difficulty": "Beginner",
+    "category": "Web Development",
+    "icon": "Layout",
+    "techStack": ["HTML", "CSS", "JavaScript", "OpenWeather API"],
+    "status": "free",
+    "steps": [
+    {
+        "step": 1,
+        "title": "Create Basic HTML Structure",
+        "description": "Create the HTML5 structure and link to CSS and JavaScript files.",
+        "code": {
+            "file": "index.html",
+            "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Weather Dashboard</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+        }
+    },
+    {
+        "step": 2,
+        "title": "Add UI Elements to HTML",
+        "description": "Add container, heading, search box, and placeholders for weather data.",
+        "code": {
+            "file": "index.html",
+            "snippet": "<div class=\"container\">\n  <h1>Weather Dashboard</h1>\n  <div class=\"search-section\">\n    <input type=\"text\" id=\"city-input\" placeholder=\"Enter city name\" />\n    <button id=\"search-btn\">Search</button>\n  </div>\n  <div id=\"weather-container\">\n    <div id=\"current-weather\" class=\"weather-box\"></div>\n    <div id=\"forecast\" class=\"forecast-container\"></div>\n  </div>\n</div>"
+        }
+    },
+    {
+        "step": 3,
+        "title": "Add Base Styling and Layout",
+        "description": "Add layout and background styles to make the app visually appealing and responsive.",
+        "code": {
+            "file": "style.css",
+            "snippet": "body {\n  font-family: 'Segoe UI', sans-serif;\n  background: linear-gradient(to right, #74ebd5, #acb6e5);\n  margin: 0;\n  padding: 0;\n}\n\n.container {\n  max-width: 800px;\n  margin: auto;\n  padding: 20px;\n}\n\n.weather-box, .forecast-card {\n  background-color: #ffffffbb;\n  padding: 15px;\n  border-radius: 10px;\n  margin-bottom: 20px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n}"
+        }
+    },
+    {
+        "step": 4,
+        "title": "Style Search Input and Buttons",
+        "description": "Add styling to input and button for better user interaction.",
+        "code": {
+            "file": "style.css",
+            "snippet": "#city-input {\n  padding: 10px;\n  font-size: 16px;\n  width: 60%;\n}\n\n#search-btn {\n  padding: 10px 20px;\n  background-color: #0077b6;\n  color: white;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}"
+        }
+    },
+    {
+        "step": 5,
+        "title": "Implement Responsive Forecast Cards",
+        "description": "Make forecast cards flexible and responsive across devices.",
+        "code": {
+            "file": "style.css",
+            "snippet": ".forecast-container {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 15px;\n  justify-content: space-between;\n}\n\n.forecast-card {\n  flex: 1 1 calc(20% - 10px);\n  text-align: center;\n}\n\n@media (max-width: 600px) {\n  .forecast-card {\n    flex: 1 1 100%;\n  }\n}"
+        }
+    },
+    {
+        "step": 6,
+        "title": "Add Search Event Listener in JS",
+        "description": "Add event listener to the search button to trigger weather fetching.",
+        "code": {
+            "file": "script.js",
+            "snippet": "document.getElementById('search-btn').addEventListener('click', () => {\n  const city = document.getElementById('city-input').value;\n  if (city) {\n    fetchWeather(city);\n  }\n});"
+        }
+    },
+    {
+        "step": 7,
+        "title": "Fetch Weather Data Using OpenWeather API",
+        "description": "Use async/await to fetch current and forecast weather data.",
+        "code": {
+            "file": "script.js",
+            "snippet": "async function fetchWeather(city) {\n  try {\n    const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);\n    const weatherData = await weatherRes.json();\n\n    const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);\n    const forecastData = await forecastRes.json();\n\n    displayCurrentWeather(weatherData);\n    displayForecast(forecastData.list);\n  } catch (error) {\n    alert('City not found. Please try again.');\n    console.error(error);\n  }\n}"
+        }
+    },
+    {
+        "step": 8,
+        "title": "Display Current Weather",
+        "description": "Use DOM manipulation to show current weather info from API.",
+        "code": {
+            "file": "script.js",
+            "snippet": "function displayCurrentWeather(data) {\n  const container = document.getElementById('current-weather');\n  container.innerHTML = `\n    <h2>Current Weather in ${data.name}</h2>\n    <p><strong>Temperature:</strong> ${data.main.temp} °C</p>\n    <p><strong>Humidity:</strong> ${data.main.humidity}%</p>\n    <p><strong>Wind:</strong> ${data.wind.speed} m/s</p>\n    <img src=\"https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png\" alt=\"${data.weather[0].description}\"/>\n    <p>${data.weather[0].description}</p>\n  `;\n}"
+        }
+    },
+    {
+        "step": 9,
+        "title": "Display 5-Day Forecast",
+        "description": "Filter forecast data and create a card for each day at noon.",
+        "code": {
+            "file": "script.js",
+            "snippet": "function displayForecast(forecastList) {\n  const container = document.getElementById('forecast');\n  container.innerHTML = '<h2>5-Day Forecast</h2>';\n\n  const dailyForecasts = forecastList.filter(forecast => forecast.dt_txt.includes('12:00:00'));\n\n  dailyForecasts.forEach(forecast => {\n    const date = new Date(forecast.dt_txt).toLocaleDateString();\n    container.innerHTML += `\n      <div class=\"forecast-card\">\n        <h3>${date}</h3>\n        <img src=\"https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png\" />\n        <p><strong>${forecast.main.temp} °C</strong></p>\n        <p>${forecast.weather[0].description}</p>\n      </div>\n    `;\n  });\n}"
+        }
+    },
+    {
+        "step": 10,
+        "title": "Add Your OpenWeather API Key",
+        "description": "Replace the placeholder with your actual OpenWeather API key.",
+        "code": {
+            "file": "script.js",
+            "snippet": "const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your API key"
+        }
+    }
+]}
+
   ]

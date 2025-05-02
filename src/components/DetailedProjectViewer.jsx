@@ -42,7 +42,7 @@ export default function DetailedProjectViewer({ projectData }) {
       </div>
 
       {/* Project Info */}
-      <div className="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto w-full">
+      <div className="bg-white p-8 rounded-xl shadow-lg mx-auto w-full">
         <h1 className="text-3xl font-bold text-gray-800 mb-3">{name}</h1>
         <p className="text-gray-600 text-lg mb-4">{description}</p>
         <div className="flex gap-3">
@@ -56,7 +56,7 @@ export default function DetailedProjectViewer({ projectData }) {
       </div>
 
       {/* Steps */}
-      <div className="max-w-4xl mx-auto w-full space-y-6">
+      <div className="mx-auto w-full space-y-6">
         {steps.map((step, index) => (
           <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
             <div
@@ -93,16 +93,16 @@ export default function DetailedProjectViewer({ projectData }) {
                     ))}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 gap-8 p-6">
+                  <div className="grid grid-cols-4 gap-8 p-6">
                     {/* Description column */}
-                    <div className="bg-gray-50 rounded-lg p-6">
+                    <div className="col-span-1 bg-gray-50 rounded-lg p-6">
                       <h3 className="text-lg font-semibold text-gray-800 mb-4">Description</h3>
                       <p className="text-gray-600 leading-relaxed whitespace-pre-line">{step.description}</p>
                     </div>
                     
                     {/* Code snippet column */}
                     {step.code && (
-                      <div className="bg-gray-50 rounded-lg p-6">
+                      <div className="col-span-3 bg-gray-50 rounded-lg p-6">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Code</h3>
                         <p className="text-sm font-medium text-gray-500 mb-3">
                           {step.code.file}
