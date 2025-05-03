@@ -31,11 +31,12 @@ import useProjectData from "@/hooks/useProjectData";
 import { useNavigate } from "react-router-dom";
 import allProjects from "/data/htmlcssjsprojects.json";
 import ProjectDetail from "@/routes/ProjectDetail";
-import ListedProjects from "../components/ListedProjects";
+import ListedProjects from "../components/ListedProjectTypes";
 import ProjectPicker from "@/components/ProjectPicker";
+import ListedProjectTypes from "../components/ListedProjectTypes";
 
 const Index = () => {
-  const { projectData, setProjectData, projects, setProjects } =
+  const { projectData, setProjectData, projectType, setProjectType } =
     useProjectData();
   const navigate = useNavigate();
 
@@ -43,9 +44,13 @@ const Index = () => {
     navigate(`/projects/${projectId}`);
   };
 
-  const handleBrowseFreeClicked =()=> {
-    navigate('/projects')
-  }
+  const handleBrowseFreeClicked = () => {
+    navigate('/projects');
+  };
+
+  /*useEffect(()=>{
+    setAllProjects(allProjects)
+  },[])*/
 
   return (
     <div className="container min-h-screen mx-auto py-8 px-4">
@@ -84,68 +89,22 @@ const Index = () => {
       </header>
 
       <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <Button onClick={handleBrowseFreeClicked} size="lg" className="gap-2">
-            <BookOpen  className="h-4 w-4" />
-            Browse Free Projects
-          </Button>
-          <Button variant="outline" size="lg" className="gap-2">
-            <UserPlus className="h-4 w-4" />
-            Sign Up for More
-          </Button>
-        </div>
-
+        <Button onClick={handleBrowseFreeClicked} size="lg" className="gap-2">
+          <BookOpen className="h-4 w-4" />
+          Browse Free Projects
+        </Button>
+        <Button variant="outline" size="lg" className="gap-2">
+          <UserPlus className="h-4 w-4" />
+          Sign Up for More
+        </Button>
+      </div>
 
       {/* Project Types Section */}
       <section className="py-12">
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">
           Explore Our Project Categories
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-blue-500/10 rounded-lg">
-                <SquarePi className="h-5 w-5 text-blue-500" />
-              </div>
-              <h3 className="font-semibold">Python Projects</h3>
-            </div>
-            <p className="text-muted-foreground">
-              Build automation scripts, data analysis tools, and web applications with Python.
-            </p>
-          </div>
-          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-green-500/10 rounded-lg">
-                <Layout className="h-5 w-5 text-green-500" />
-              </div>
-              <h3 className="font-semibold">Web Development</h3>
-            </div>
-            <p className="text-muted-foreground">
-              Create beautiful, responsive websites using HTML, CSS, and JavaScript.
-            </p>
-          </div>
-          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-purple-500/10 rounded-lg">
-                <Code2 className="h-5 w-5 text-purple-500" />
-              </div>
-              <h3 className="font-semibold">React Projects</h3>
-            </div>
-            <p className="text-muted-foreground">
-              Develop modern, interactive user interfaces with React.js.
-            </p>
-          </div>
-          <div className="p-6 rounded-lg bg-card border hover:border-primary/50 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-orange-500/10 rounded-lg">
-                <Globe className="h-5 w-5 text-orange-500" />
-              </div>
-              <h3 className="font-semibold">Full Stack</h3>
-            </div>
-            <p className="text-muted-foreground">
-              Build complete applications with frontend and backend integration.
-            </p>
-          </div>
-        </div>
+        <ListedProjectTypes />
       </section>
 
       {/* Features Section */}

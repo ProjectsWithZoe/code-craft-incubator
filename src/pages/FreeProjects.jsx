@@ -1,15 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Code2, SquarePi, Layout, Globe } from "lucide-react";
-import allProjects from '../../data/htmlcssjsprojects.json'
+import allProjects from "../../data/htmlcssjsprojects.json";
 import { useNavigate } from "react-router-dom";
+import useProjectData from "../hooks/useProjectData";
+import { useEffect, useState } from "react";
 
 //console.log(allProjects[0])
 
-const projects = allProjects.filter((project)=> project.status==='free')
-
-
+//const projects = allProjects.filter((project)=> project.status==='free')
 
 /*const projects = [
   {
@@ -53,35 +60,50 @@ const projects = allProjects.filter((project)=> project.status==='free')
 const difficultyColors = {
   Beginner: "bg-green-200",
   Intermediate: "bg-yellow-200",
-  Advanced: "bg-red-200"
+  Advanced: "bg-red-200",
 };
 
 const icons = {
-    Layout
-}
+  Layout,
+  SquarePi,
+  Code2,
+  Globe
+};
 
 const FreeProjects = () => {
+  const { projectType } = useProjectData();
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(allProjects)
+    console.log(projectType)
+    // Filter projects based on projectType
+    const filtered = allProjects.filter(project => 
+      project.category2 === projectType.toLowerCase()
+    );
+    setFilteredProjects(filtered);
+  }, [projectType]);
 
-    const handleProjectClick = (projectId) => {
-        navigate(`/projects/${projectId}`);
-      };
-      const navigate = useNavigate()
-
+  const handleProjectClick = (projectId) => {
+    navigate(`/projects/${projectId}`);
+  };
 
   return (
     <div className="container mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-8">Free Projects</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => {
-          const Icon = icons[project.icon];
-          
+        {filteredProjects.map((project) => {
+          //const Icon = icons[project.icon];
           return (
-            <Card key={project.id} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={project.id}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="p-2 bg-primary/10 rounded-lg">
-                    <Icon className="h-8 w-8 text-primary" />
+                    {/*<Icon className="h-8 w-8 text-primary" />*/}
                   </div>
                   <CardTitle>{project.name}</CardTitle>
                 </div>
@@ -89,21 +111,25 @@ const FreeProjects = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge className='text-lg' variant="secondary">{project.category}</Badge>
-                  <Badge variant="outline" className={difficultyColors[project.difficulty]}>
+                  <Badge className="text-lg" variant="secondary">
+                    {project.category}
+                  </Badge>
+                  <Badge
+                    variant="outline"
+                    className={difficultyColors[project.difficulty]}
+                  >
                     {project.difficulty}
                   </Badge>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech, index) => (
-                    <Badge key={index} variant="outline" className="bg-muted">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
+                
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-blue-700 text-white" onClick={()=>handleProjectClick(project.id)} >View Project</Button>
+                <Button
+                  className="w-full bg-blue-700 text-white"
+                  onClick={() => handleProjectClick(project.id)}
+                >
+                  View Project
+                </Button>
               </CardFooter>
             </Card>
           );

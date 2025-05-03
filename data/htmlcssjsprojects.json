@@ -6,6 +6,7 @@
     "description": "Create a custom digital postcard with background images, personalized messages, and download functionality. Includes a confetti animation when the postcard is 'sent'.",
     "difficulty": "Beginner",
     "category": "HTML/CSS/JavaScript",
+    "category2": "webdev",
     "steps": [
       {
         "step": 1,
@@ -95,6 +96,7 @@
     "description": "Each day, users click an emoji that represents their mood. Mood history is saved in localStorage and displayed in a calendar grid.",
     "difficulty": "Beginner",
     "category": "React",
+    "category2": "react",
     "steps": [
       {
         "step": 1,
@@ -132,6 +134,7 @@
     "description": "Create a landing page that types out words/phrases one letter at a time. Bonus: Randomize phrases from a list.",
     "difficulty": "Beginner",
     "category": "Web Development",
+    "category2": "webdev",
     "steps": [
       {
         "step": 1,
@@ -169,6 +172,7 @@
     "description": "Play an audio file and animate bars or shapes that respond to the audio volume/frequency using the HTML5 audio and Canvas API.",
     "difficulty": "Intermediate",
     "category": "Web Development",
+    "category2": "webdev",
     "steps": [
       {
         "step": 1,
