@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Code2, SquarePi, Layout, Globe } from "lucide-react";
+import { Mail,Keyboard, Music } from "lucide-react";
 import allProjects from "../../data/htmlcssjsprojects.json";
 import { useNavigate } from "react-router-dom";
 import useProjectData from "../hooks/useProjectData";
@@ -64,10 +64,9 @@ const difficultyColors = {
 };
 
 const icons = {
-  Layout,
-  SquarePi,
-  Code2,
-  Globe
+    Mail: Mail,
+    Keyboard: Keyboard,
+    Music: Music
 };
 
 const FreeProjects = () => {
@@ -91,10 +90,14 @@ const FreeProjects = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8">Free Projects</h1>
+        <div className="flex justify-between">
+            <button className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white">Back</button>
+            <button className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white">All Projects</button>
+        </div>
+      <h1 className="text-3xl font-bold mb-8">{filteredProjects[0]['category']} Projects</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredProjects.map((project) => {
-          //const Icon = icons[project.icon];
+          const Icon = icons[project.icon];
           return (
             <Card
               key={project.id}
@@ -103,7 +106,7 @@ const FreeProjects = () => {
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="p-2 bg-primary/10 rounded-lg">
-                    {/*<Icon className="h-8 w-8 text-primary" />*/}
+                    <Icon className="h-8 w-8 text-primary" />
                   </div>
                   <CardTitle>{project.name}</CardTitle>
                 </div>
@@ -125,7 +128,7 @@ const FreeProjects = () => {
               </CardContent>
               <CardFooter>
                 <Button
-                  className="w-full bg-blue-700 text-white"
+                  className="w-full bg-blue-700 text-white text-xl px-4 py-2"
                   onClick={() => handleProjectClick(project.id)}
                 >
                   View Project

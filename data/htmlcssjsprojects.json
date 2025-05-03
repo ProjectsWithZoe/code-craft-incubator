@@ -5,7 +5,7 @@
     "icon": "Mail",
     "description": "Create a custom digital postcard with background images, personalized messages, and download functionality. Includes a confetti animation when the postcard is 'sent'.",
     "difficulty": "Beginner",
-    "category": "HTML/CSS/JavaScript",
+    "category": "Web Development",
     "category2": "webdev",
     "steps": [
       {
