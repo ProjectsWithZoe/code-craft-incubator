@@ -52,11 +52,8 @@ const Index = () => {
   }
 
   useEffect(()=>{
-    if (userId && date){
       addUser()
-    }
-    
-  }, [])
+  }, [userId])
 
   const handleProjectClick = (projectId) => {
     navigate(`/projects/${projectId}`);
