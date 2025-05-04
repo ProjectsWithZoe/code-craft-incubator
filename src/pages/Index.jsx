@@ -42,6 +42,7 @@ const Index = () => {
   console.log(userId, date)
 
   const addUser = async()=>{
+    if (!userId) return;
     const res = await fetch('/api/add-user', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
