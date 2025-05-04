@@ -43,7 +43,7 @@ const Index = () => {
 
   const addUser = async()=>{
     const res = await fetch('/api/add-user', {
-      method: POST,
+      method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({uuid: uuid, date_accessed: date})
     });
@@ -53,7 +53,7 @@ const Index = () => {
 
   useEffect(()=>{
     if (userId && date){
-      addUser
+      addUser()
     }
     
   }, [])
