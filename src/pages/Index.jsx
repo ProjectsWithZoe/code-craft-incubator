@@ -30,11 +30,33 @@ import {
 import useProjectData from "@/hooks/useProjectData";
 import { useNavigate } from "react-router-dom";
 import ListedProjectTypes from "../components/ListedProjectTypes";
+import { useUserId } from "../hooks/useUserId";
+import { formatDate } from "date-fns";
 
 const Index = () => {
   const { projectData, setProjectData, projectType, setProjectType } =
     useProjectData();
   const navigate = useNavigate();
+  const userId = useUserId()
+  const date = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss")
+  console.log(userId, date)
+
+  const addUser = async()=>{
+    const res = await fetch('/api/add-user', {
+      method: POST,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({uuid: uuid, date_accessed: date})
+    });
+    const data = await res.json()
+    console.log(data)
+  }
+
+  useEffect(()=>{
+    if (userId && date){
+      addUser
+    }
+    
+  }, [])
 
   const handleProjectClick = (projectId) => {
     navigate(`/projects/${projectId}`);

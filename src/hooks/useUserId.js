@@ -10,12 +10,16 @@ export function useUserId() {
     
     if (storedUserId) {
       setUserId(storedUserId);
+      console.log(storedUserId)
     } else {
       // Generate a new UUID if none exists
       const newUserId = uuidv4();
       localStorage.setItem('userId', newUserId);
+      console.log( newUserId)
       setUserId(newUserId);
+
     }
+    
   }, []);
 
   return userId;
