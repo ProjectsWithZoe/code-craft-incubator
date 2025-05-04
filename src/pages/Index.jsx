@@ -29,10 +29,6 @@ import {
 } from "@/components/ui/card";
 import useProjectData from "@/hooks/useProjectData";
 import { useNavigate } from "react-router-dom";
-import allProjects from "/data/htmlcssjsprojects.json";
-import ProjectDetail from "@/routes/ProjectDetail";
-import ListedProjects from "../components/ListedProjectTypes";
-import ProjectPicker from "@/components/ProjectPicker";
 import ListedProjectTypes from "../components/ListedProjectTypes";
 
 const Index = () => {
@@ -48,6 +44,12 @@ const Index = () => {
     navigate('/projects');
   };
 
+  const handleAccessDB = async()=>{
+    const res = await fetch('/api/data')
+    const data = await res.json()
+    console.log(data)
+  }
+
   /*useEffect(()=>{
     setAllProjects(allProjects)
   },[])*/
@@ -61,7 +63,9 @@ const Index = () => {
           <span className="font-semibold">CodeCraft</span>
         </div>
         <div className="flex gap-4">
-          <Button variant="outline" size="sm" className="gap-2">
+          <Button onClick={()=>{
+            navigate('/login')
+          }} variant="outline" size="sm" className="gap-2">
             <LogIn className="h-4 w-4" />
             Log In
           </Button>
@@ -71,6 +75,8 @@ const Index = () => {
           </Button>
         </div>
       </div>
+
+      <button onClick={handleAccessDB} className=" border border-blue-800 p-4 justify-center">Access DB</button>
 
       {/* Hero Section */}
       <header className="text-center my-12">
@@ -89,11 +95,11 @@ const Index = () => {
       </header>
 
       <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-        <Button onClick={handleBrowseFreeClicked} size="lg" className="gap-2">
-          <BookOpen className="h-4 w-4" />
+        <Button onClick={handleBrowseFreeClicked} size="lg" className="gap-2 bg-blue-100 text-md">
+          <BookOpen className=" h-4 w-4" />
           Browse Free Projects
         </Button>
-        <Button variant="outline" size="lg" className="gap-2">
+        <Button variant="outline" size="lg" className="gap-2 text-md">
           <UserPlus className="h-4 w-4" />
           Sign Up for More
         </Button>
@@ -155,11 +161,11 @@ const Index = () => {
       <section className="py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
           <div>
-            <div className="text-3xl font-bold text-primary">100+</div>
+            <div className="text-3xl font-bold text-primary">10+</div>
             <div className="text-muted-foreground">Projects</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary">50k+</div>
+            <div className="text-3xl font-bold text-primary">2k+</div>
             <div className="text-muted-foreground">Developers</div>
           </div>
           <div>

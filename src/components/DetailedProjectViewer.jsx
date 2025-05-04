@@ -26,7 +26,7 @@ export default function DetailedProjectViewer({ projectData }) {
   };
 
   const navigateToMain = () => {
-    navigate("/");
+    navigate("/projects");
   };
 
   return (

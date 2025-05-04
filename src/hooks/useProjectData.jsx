@@ -2,9 +2,9 @@ import { create } from "zustand";
 
 const useProjectData = create((set) => ({
   projectData: null,
-  //allProjects: [],
+  filteredProjects: [],
   projectType: "all",
-  //setAllProjects: (projects) => set({ projects }),
+  setFilteredProjects: (filtered) => set({filteredProjects: filtered}),
   setProjectData: (data) => set({ projectData: data }),
   setProjectType: (projectType)=> set({projectType})
 }));
