@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import {
   Code2,
+  CircleDollarSign,
  
   Trophy,
   LogIn,
@@ -80,7 +81,15 @@ const Index = () => {
             <UserPlus className="h-4 w-4" />
             Sign Up
           </Button>
+          
         </div>}
+        <Button size="sm" className="gap-2">
+            <CircleDollarSign onClick={()=>{
+              console.log('pricing clicked')
+              navigate('/pricing')
+            }} className="h-4 w-4" />
+            Pricing
+          </Button>
       </div>
       {/* Hero Section */}
       <header className="text-center my-12">
@@ -107,6 +116,7 @@ const Index = () => {
           <UserPlus className="h-4 w-4" />
           Sign Up for More
         </Button>}
+        
       </div>
 
       {/* Project Types Section */}

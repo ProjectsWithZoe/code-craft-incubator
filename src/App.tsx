@@ -11,6 +11,7 @@ import FreeProjects from './pages/FreeProjects';
 import {LoginForm} from "./components/Login-form";
 import {SignupForm} from "./components/Signup-form"
 import { Analytics } from "@vercel/analytics/react"
+import {PricingPage} from "./pages/PricingPage"
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path='/projects' element={<FreeProjects/>} />
           <Route path='/login' element={<LoginForm/>} />
           <Route path='/signup' element={<SignupForm/>} />
+          <Route path='/pricing' element={<PricingPage/>} />
 
           
         </Routes>
