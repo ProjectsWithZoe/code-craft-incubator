@@ -5,6 +5,8 @@ const useProjectData = create((set) => ({
   filteredProjects: [],
   projectType: "all",
   authenticated: false,
+  allProjects: [],
+  setAllProjects: (projects)=> set({allProjects: projects}),
   setFilteredProjects: (filtered) => set({filteredProjects: filtered}),
   setProjectData: (data) => set({ projectData: data }),
   setProjectType: (projectType)=> set({projectType}),

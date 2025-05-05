@@ -22,7 +22,7 @@ import { useUserId } from "../hooks/useUserId";
 import { formatDate } from "date-fns";
 
 const Index = () => {
-  const { projectData, setProjectData, projectType, setProjectType, authenticated } =
+  const { setAllProjects, authenticated } =
     useProjectData();
   const navigate = useNavigate();
   const userId = useUserId()
@@ -58,6 +58,7 @@ const Index = () => {
         const res = await fetch('/api/projectdata');
         const data = await res.json();
         console.log(data);
+        setAllProjects(data)
       } catch (err) {
         console.error('Error fetching project data:', err);
       }
