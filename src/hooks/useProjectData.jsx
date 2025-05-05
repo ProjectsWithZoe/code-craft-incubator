@@ -4,12 +4,12 @@ const useProjectData = create((set) => ({
   projectData: null,
   filteredProjects: [],
   projectType: "all",
-  authenticated: false,
+  authenticated: true,
   allProjects: [],
   setAllProjects: (projects)=> set({allProjects: projects}),
   setFilteredProjects: (filtered) => set({filteredProjects: filtered}),
   setProjectData: (data) => set({ projectData: data }),
   setProjectType: (projectType)=> set({projectType}),
-  setAuthenticated: (authenticated)=> set({authenticated: true})
+  setAuthenticated: (authenticated)=> set({authenticated: false})
 }));
 export default useProjectData;
