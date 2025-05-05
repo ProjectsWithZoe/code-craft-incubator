@@ -14,6 +14,7 @@ import {
   
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AccountButton } from "../components/AccountButton";
 
 import useProjectData from "@/hooks/useProjectData";
 import { useNavigate } from "react-router-dom";
