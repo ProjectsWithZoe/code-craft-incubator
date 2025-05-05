@@ -56,7 +56,7 @@ export default function DetailedProjectViewer({ projectData }) {
             {category}
           </span>
         </div>
-        {dataset && <span>  <a
+        {dataset && <span className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">  <a
             href={`/${dataset}`}
             download
             className="hover:underline"
