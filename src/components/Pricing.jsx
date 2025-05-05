@@ -5,8 +5,6 @@ const features = [
   'Step-by-step guidance',
   'Code reviews',
   'Community support',
-  'Progress tracking',
-  'Certificate of completion'
 ];
 
 const plans = [
@@ -21,17 +19,17 @@ const plans = [
   },
   {
     name: 'Lifetime',
-    price: '$199',
-    period: 'one-time payment',
-    description: 'Best value for long-term learners',
+    price: '$49.99',
+    period: 'one-time',
+    description: 'Best value for long-term learners and problem solvers',
     features: [...features, 'Lifetime access', 'Priority support'],
     cta: 'Get Lifetime Access',
     popular: true
   },
   {
-    name: 'Low Income',
+    name: 'No/Low Income',
     price: 'On Request',
-    period: 'flexible',
+    period: '',
     description: 'Special pricing for students and those with financial constraints',
     features: [...features],
     cta: 'Apply Now',
@@ -41,7 +39,7 @@ const plans = [
 
 export function Pricing() {
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
+    <div className="px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -52,7 +50,7 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
+        <div className="mt-8 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
           {plans.map((plan) => (
             <div
               key={plan.name}
@@ -60,12 +58,8 @@ export function Pricing() {
                 plan.popular ? 'border-2 border-blue-500' : ''
               }`}
             >
-              <div className="p-6">
-                {plan.popular && (
-                  <p className="absolute top-0 -translate-y-1/2 transform rounded-full bg-blue-500 py-1.5 px-4 text-sm font-semibold text-white">
-                    Most popular
-                  </p>
-                )}
+              <div className="p-4">
+                
                 <h3 className="text-lg font-medium text-gray-900">{plan.name}</h3>
                 <p className="mt-4 text-sm text-gray-500">{plan.description}</p>
                 <p className="mt-8">

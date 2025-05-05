@@ -52,15 +52,21 @@ const Index = () => {
     navigate('/projects');
   };
 
-  const handleAccessDB = async()=>{
-    const res = await fetch('/api/data')
-    const data = await res.json()
-    console.log(data)
-  }
-
-  /*useEffect(()=>{
-    setAllProjects(allProjects)
-  },[])*/
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/projectdata');
+        const data = await res.json();
+        console.log(data);
+      } catch (err) {
+        console.error('Error fetching project data:', err);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
 
   return (
     <div className="container min-h-screen mx-auto py-8 px-4">
@@ -83,11 +89,11 @@ const Index = () => {
           </Button>
           
         </div>}
-        <Button size="sm" className="gap-2">
-            <CircleDollarSign onClick={()=>{
-              console.log('pricing clicked')
-              navigate('/pricing')
-            }} className="h-4 w-4" />
+        <Button onClick={()=>{
+          navigate('/pricing')
+              console.log('clicked')
+            }} size="sm" className="gap-2">
+            <CircleDollarSign  className="h-4 w-4" />
             Pricing
           </Button>
       </div>

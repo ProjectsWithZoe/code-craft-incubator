@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import DetailedProjectViewer from "../components/DetailedProjectViewer";
-import allProjects from "../../data/projects.json";
 import useProjectData from "../hooks/useProjectData";
 
 

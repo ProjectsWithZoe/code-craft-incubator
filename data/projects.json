@@ -7,6 +7,7 @@
     "difficulty": "Beginner",
     "category": "Web Development",
     "category2": "webdev",
+    "subscription": "free",
     "steps": [
       {
         "step": 1,
@@ -87,100 +88,103 @@
         "code": {
           "file": "enhancements.js",
           "snippet": "// Add these functions to your script.js file\n\n// 1. Create a toggle for postcard borders\nconst borderToggle = document.createElement('div');\nborderToggle.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Border Style</h3>\n    <div class=\"control-group\">\n      <label for=\"border-toggle\">Add Border:</label>\n      <input type=\"checkbox\" id=\"border-toggle\">\n    </div>\n    <div class=\"control-group\">\n      <label for=\"border-color\">Border Color:</label>\n      <input type=\"color\" id=\"border-color\" value=\"#ffffff\">\n    </div>\n  </div>\n`;\n\n// Insert border toggle before action buttons\ndocument.querySelector('.action-buttons').before(borderToggle);\n\n// Get new DOM elements\nconst borderToggleInput = document.getElementById('border-toggle');\nconst borderColorInput = document.getElementById('border-color');\n\n// Event listeners for border controls\nborderToggleInput.addEventListener('change', updateBorder);\nborderColorInput.addEventListener('input', updateBorder);\n\n// Update border function\nfunction updateBorder() {\n  if (borderToggleInput.checked) {\n    postcardElement.style.border = `10px solid ${borderColorInput.value}`;\n  } else {\n    postcardElement.style.border = 'none';\n  }\n}\n\n// 2. Add a vintage filter toggle\nconst filterToggle = document.createElement('div');\nfilterToggle.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Image Filter</h3>\n    <div class=\"control-group\">\n      <label for=\"filter-select\">Filter:</label>\n      <select id=\"filter-select\">\n        <option value=\"none\">None</option>\n        <option value=\"sepia\">Vintage</option>\n        <option value=\"grayscale\">Black & White</option>\n        <option value=\"brightness\">Bright</option>\n        <option value=\"contrast\">High Contrast</option>\n      </select>\n    </div>\n  </div>\n`;\n\n// Insert filter toggle after background options\ndocument.querySelector('.background-options').parentNode.after(filterToggle);\n\n// Get filter select element\nconst filterSelect = document.getElementById('filter-select');\n\n// Event listener for filter\nfilterSelect.addEventListener('change', updateFilter);\n\n// Update filter function\nfunction updateFilter() {\n  const filter = filterSelect.value;\n  \n  // Reset all filters\n  postcardElement.style.filter = 'none';\n  \n  // Apply selected filter\n  switch (filter) {\n    case 'sepia':\n      postcardElement.style.filter = 'sepia(0.7)';\n      break;\n    case 'grayscale':\n      postcardElement.style.filter = 'grayscale(1)';\n      break;\n    case 'brightness':\n      postcardElement.style.filter = 'brightness(1.3)';\n      break;\n    case 'contrast':\n      postcardElement.style.filter = 'contrast(1.5)';\n      break;\n  }\n}\n\n// 3. Add decorative stamp option\nconst stampOption = document.createElement('div');\nstampOption.innerHTML = `\n  <div class=\"control-section\">\n    <h3>Add Stamp</h3>\n    <div class=\"stamp-options\">\n      <button class=\"stamp-btn\" data-stamp=\"stamp1\">✈️</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp2\">🌍</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp3\">💌</button>\n      <button class=\"stamp-btn\" data-stamp=\"stamp4\">🏙️</button>\n      <button class=\"stamp-btn\" data-stamp=\"none\">None</button>\n    </div>\n  </div>\n`;\n\n// Insert stamp option before action buttons\ndocument.querySelector('.action-buttons').before(stampOption);\n\n// Add styles for stamps\nconst stampStyles = document.createElement('style');\nstampStyles.textContent = `\n  .stamp-options {\n    display: flex;\n    gap: 10px;\n    margin-top: 10px;\n  }\n  \n  .stamp-btn {\n    font-size: 24px;\n    width: 50px;\n    height: 50px;\n    padding: 5px;\n    background-color: #f8f8f8;\n    color: #333;\n  }\n  \n  .stamp {\n    position: absolute;\n    top: 20px;\n    right: 20px;\n    font-size: 40px;\n    transform: rotate(15deg);\n    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));\n  }\n`;\ndocument.head.appendChild(stampStyles);\n\n// Stamp buttons event listeners\ndocument.querySelectorAll('.stamp-btn').forEach(btn => {\n  btn.addEventListener('click', () => {\n    // Remove existing stamp if any\n    const existingStamp = postcardElement.querySelector('.stamp');\n    if (existingStamp) {\n      existingStamp.remove();\n    }\n    \n    // Add new stamp if not 'none'\n    const stampType = btn.getAttribute('data-stamp');\n    if (stampType !== 'none') {\n      const stamp = document.createElement('div');\n      stamp.className = 'stamp';\n      \n      // Set emoji based on stamp type\n      switch (stampType) {\n        case 'stamp1':\n          stamp.textContent = '✈️';\n          break;\n        case 'stamp2':\n          stamp.textContent = '🌍';\n          break;\n        case 'stamp3':\n          stamp.textContent = '💌';\n          break;\n        case 'stamp4':\n          stamp.textContent = '🏙️';\n          break;\n      }\n      \n      postcardElement.appendChild(stamp);\n    }\n  });\n});"
-    }}
-        ]},
-        {
-          "id": "emoji-mood-tracker",
-          "name": "Emoji Mood Tracker",
-          "icon": "Laugh",
-          "description": "Track your daily mood by selecting an emoji. The app stores your moods in localStorage and visualizes them on a calendar grid. Great for learning DOM manipulation, events, and localStorage.",
-          "difficulty": "Beginner",
-          "category": "Web Development",
-          "category2": "webdev",
-          "steps": [
-            {
-              "step": 1,
-              "title": "Set Up the Project Folder",
-              "description": "Create a folder for your project and inside it, create three files: `index.html`, `style.css`, and `script.js`. This is the basic structure for any small web app.",
-              "code": {
-                "file": "Terminal",
-                "snippet": "mkdir emoji-mood-tracker\ncd emoji-mood-tracker\ntouch index.html style.css script.js"
-              }
-            },
-            {
-              "step": 2,
-              "title": "Create the HTML Layout",
-              "description": "Add a heading, emoji buttons for moods, and a container for the calendar. We'll reference the emoji buttons and the calendar container in JavaScript later.",
-              "code": {
-                "file": "index.html",
-                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Emoji Mood Tracker</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <h1>Emoji Mood Tracker</h1>\n  <div class=\"emoji-picker\">\n    <button data-mood=\"😊\">😊</button>\n    <button data-mood=\"😐\">😐</button>\n    <button data-mood=\"😢\">😢</button>\n  </div>\n  <div class=\"calendar-grid\" id=\"calendar\"></div>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
-              }
-            },
-            {
-              "step": 3,
-              "title": "Style the App",
-              "description": "Use CSS to make the interface look cleaner and mobile-friendly. We'll use CSS Grid to format the calendar.",
-              "code": {
-                "file": "style.css",
-                "snippet": "body {\n  font-family: sans-serif;\n  text-align: center;\n  padding: 20px;\n  background: #f0f8ff;\n}\n\nh1 {\n  margin-bottom: 20px;\n}\n\n.emoji-picker button {\n  font-size: 2rem;\n  margin: 10px;\n  padding: 10px;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n}\n\n.calendar-grid {\n  display: grid;\n  grid-template-columns: repeat(7, 1fr);\n  gap: 10px;\n  margin-top: 30px;\n}\n\n.calendar-grid div {\n  border: 1px solid #ccc;\n  background: #fff;\n  padding: 15px;\n  height: 60px;\n  font-size: 1.5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 8px;\n}"
-              }
-            },
-            {
-              "step": 4,
-              "title": "Add JavaScript to Handle Mood Selection",
-              "description": "Listen for button clicks, get the selected emoji, store it with today’s date in `localStorage`, and call a function to update the calendar grid.",
-              "code": {
-                "file": "script.js",
-                "snippet": "document.querySelectorAll('.emoji-picker button').forEach(btn => {\n  btn.addEventListener('click', () => {\n    const mood = btn.dataset.mood;\n    const today = new Date().toISOString().split('T')[0];\n    localStorage.setItem(today, mood);\n    renderCalendar();\n  });\n});"
-              }
-            },
-            {
-              "step": 5,
-              "title": "Render Calendar with Mood Data",
-              "description": "Loop through the past 30 days and create a div for each day. If a mood is saved for that date in `localStorage`, show it. Otherwise, show an empty cell.",
-              "code": {
-                "file": "script.js",
-                "snippet": "function renderCalendar() {\n  const calendar = document.getElementById('calendar');\n  calendar.innerHTML = '';\n  const today = new Date();\n  for (let i = 0; i < 30; i++) {\n    const date = new Date(today);\n    date.setDate(today.getDate() - i);\n    const dateStr = date.toISOString().split('T')[0];\n    const mood = localStorage.getItem(dateStr) || '';\n    const cell = document.createElement('div');\n    cell.textContent = mood;\n    cell.title = dateStr;\n    calendar.appendChild(cell);\n  }\n}\n\n// Initial render on page load\nrenderCalendar();"
-              }
-            },
-            {
-              "step": 6,
-              "title": "Add Hover Tooltips to Calendar Cells",
-              "description": "To make it clearer which day each emoji represents, we add the date as a `title` attribute. This will show up on hover as a tooltip.",
-              "code": {
-                "file": "script.js",
-                "snippet": "// Already included in the cell creation above:\ncell.title = dateStr;"
-              }
-            },
-            {
-              "step": 7,
-              "title": "Make Mood Selection Persistent",
-              "description": "Because we're using `localStorage`, the data is saved even if the user closes the browser or reloads the page. Ensure this is reflected clearly for new users.",
-              "code": {
-                "file": "README.md",
-                "snippet": "Tip: The app automatically loads mood history for the last 30 days from your browser's localStorage. No database required!"
-              }
-            },
-            {
-              "step": 8,
-              "title": "Add Clear Mood History Button (Optional)",
-              "description": "You can give users the option to clear all mood data. This is helpful for testing or resetting their mood log.",
-              "code": {
-                "file": "index.html",
-                "snippet": "<button id=\"clear-btn\">Clear History</button>"
-              }
-            },
-            {
-              "step": 9,
-              "title": "Implement Clear History Function",
-              "description": "Handle clicks on the clear button to wipe all stored moods and re-render the calendar.",
-              "code": {
-                "file": "script.js",
-                "snippet": "document.getElementById('clear-btn').addEventListener('click', () => {\n  if (confirm('Are you sure you want to clear all mood data?')) {\n    localStorage.clear();\n    renderCalendar();\n  }\n});"
-              }
-            }
-          ]
-        },
+        }
+      }
+    ]
+  },
+  {
+    "id": "emoji-mood-tracker",
+    "name": "Emoji Mood Tracker",
+    "icon": "Laugh",
+    "description": "Track your daily mood by selecting an emoji. The app stores your moods in localStorage and visualizes them on a calendar grid. Great for learning DOM manipulation, events, and localStorage.",
+    "difficulty": "Beginner",
+    "category": "Web Development",
+    "category2": "webdev",
+    "subscription": "paid",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Set Up the Project Folder",
+        "description": "Create a folder for your project and inside it, create three files: `index.html`, `style.css`, and `script.js`. This is the basic structure for any small web app.",
+        "code": {
+          "file": "Terminal",
+          "snippet": "mkdir emoji-mood-tracker\ncd emoji-mood-tracker\ntouch index.html style.css script.js"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Create the HTML Layout",
+        "description": "Add a heading, emoji buttons for moods, and a container for the calendar. We'll reference the emoji buttons and the calendar container in JavaScript later.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Emoji Mood Tracker</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <h1>Emoji Mood Tracker</h1>\n  <div class=\"emoji-picker\">\n    <button data-mood=\"😊\">😊</button>\n    <button data-mood=\"😐\">😐</button>\n    <button data-mood=\"😢\">😢</button>\n  </div>\n  <div class=\"calendar-grid\" id=\"calendar\"></div>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Style the App",
+        "description": "Use CSS to make the interface look cleaner and mobile-friendly. We'll use CSS Grid to format the calendar.",
+        "code": {
+          "file": "style.css",
+          "snippet": "body {\n  font-family: sans-serif;\n  text-align: center;\n  padding: 20px;\n  background: #f0f8ff;\n}\n\nh1 {\n  margin-bottom: 20px;\n}\n\n.emoji-picker button {\n  font-size: 2rem;\n  margin: 10px;\n  padding: 10px;\n  cursor: pointer;\n  border: none;\n  background: transparent;\n}\n\n.calendar-grid {\n  display: grid;\n  grid-template-columns: repeat(7, 1fr);\n  gap: 10px;\n  margin-top: 30px;\n}\n\n.calendar-grid div {\n  border: 1px solid #ccc;\n  background: #fff;\n  padding: 15px;\n  height: 60px;\n  font-size: 1.5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 8px;\n}"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Add JavaScript to Handle Mood Selection",
+        "description": "Listen for button clicks, get the selected emoji, store it with today’s date in `localStorage`, and call a function to update the calendar grid.",
+        "code": {
+          "file": "script.js",
+          "snippet": "document.querySelectorAll('.emoji-picker button').forEach(btn => {\n  btn.addEventListener('click', () => {\n    const mood = btn.dataset.mood;\n    const today = new Date().toISOString().split('T')[0];\n    localStorage.setItem(today, mood);\n    renderCalendar();\n  });\n});"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Render Calendar with Mood Data",
+        "description": "Loop through the past 30 days and create a div for each day. If a mood is saved for that date in `localStorage`, show it. Otherwise, show an empty cell.",
+        "code": {
+          "file": "script.js",
+          "snippet": "function renderCalendar() {\n  const calendar = document.getElementById('calendar');\n  calendar.innerHTML = '';\n  const today = new Date();\n  for (let i = 0; i < 30; i++) {\n    const date = new Date(today);\n    date.setDate(today.getDate() - i);\n    const dateStr = date.toISOString().split('T')[0];\n    const mood = localStorage.getItem(dateStr) || '';\n    const cell = document.createElement('div');\n    cell.textContent = mood;\n    cell.title = dateStr;\n    calendar.appendChild(cell);\n  }\n}\n\n// Initial render on page load\nrenderCalendar();"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Add Hover Tooltips to Calendar Cells",
+        "description": "To make it clearer which day each emoji represents, we add the date as a `title` attribute. This will show up on hover as a tooltip.",
+        "code": {
+          "file": "script.js",
+          "snippet": "// Already included in the cell creation above:\ncell.title = dateStr;"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Make Mood Selection Persistent",
+        "description": "Because we're using `localStorage`, the data is saved even if the user closes the browser or reloads the page. Ensure this is reflected clearly for new users.",
+        "code": {
+          "file": "README.md",
+          "snippet": "Tip: The app automatically loads mood history for the last 30 days from your browser's localStorage. No database required!"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Add Clear Mood History Button (Optional)",
+        "description": "You can give users the option to clear all mood data. This is helpful for testing or resetting their mood log.",
+        "code": {
+          "file": "index.html",
+          "snippet": "<button id=\"clear-btn\">Clear History</button>"
+        }
+      },
+      {
+        "step": 9,
+        "title": "Implement Clear History Function",
+        "description": "Handle clicks on the clear button to wipe all stored moods and re-render the calendar.",
+        "code": {
+          "file": "script.js",
+          "snippet": "document.getElementById('clear-btn').addEventListener('click', () => {\n  if (confirm('Are you sure you want to clear all mood data?')) {\n    localStorage.clear();\n    renderCalendar();\n  }\n});"
+        }
+      }
+    ]
+  },
   {
     "id": "simple-music-visualizer",
     "name": "Simple Music Visualizer",
@@ -189,7 +193,7 @@
     "difficulty": "Intermediate",
     "category": "Web Development",
     "category2": "webdev",
-
+    "subscription": "paid",
     "steps": [
       {
         "step": 1,
@@ -275,7 +279,8 @@
       }
     ]
   },
-  {"id": "weather-dashboard",
+  {
+    "id": "weather-dashboard",
     "name": "Simple Weather Dashboard",
     "description": "A beginner-friendly project that teaches how to visualize weather using data obtained from an external API ",
     "difficulty": "Beginner",
@@ -283,619 +288,617 @@
     "category2": "webdev",
     "icon": "Layout",
     "techStack": ["HTML", "CSS", "JavaScript", "OpenWeather API"],
-    "status": "free",
+    "subscription": "free",
     "steps": [
-    {
+      {
         "step": 1,
         "title": "Create Basic HTML Structure",
         "description": "Create the HTML5 structure and link to CSS and JavaScript files.",
         "code": {
-            "file": "index.html",
-            "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Weather Dashboard</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+          "file": "index.html",
+          "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Weather Dashboard</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
         }
-    },
-    {
+      },
+      {
         "step": 2,
         "title": "Add UI Elements to HTML",
         "description": "Add container, heading, search box, and placeholders for weather data.",
         "code": {
-            "file": "index.html",
-            "snippet": "<div class=\"container\">\n  <h1>Weather Dashboard</h1>\n  <div class=\"search-section\">\n    <input type=\"text\" id=\"city-input\" placeholder=\"Enter city name\" />\n    <button id=\"search-btn\">Search</button>\n  </div>\n  <div id=\"weather-container\">\n    <div id=\"current-weather\" class=\"weather-box\"></div>\n    <div id=\"forecast\" class=\"forecast-container\"></div>\n  </div>\n</div>"
+          "file": "index.html",
+          "snippet": "<div class=\"container\">\n  <h1>Weather Dashboard</h1>\n  <div class=\"search-section\">\n    <input type=\"text\" id=\"city-input\" placeholder=\"Enter city name\" />\n    <button id=\"search-btn\">Search</button>\n  </div>\n  <div id=\"weather-container\">\n    <div id=\"current-weather\" class=\"weather-box\"></div>\n    <div id=\"forecast\" class=\"forecast-container\"></div>\n  </div>\n</div>"
         }
-    },
-    {
+      },
+      {
         "step": 3,
         "title": "Add Base Styling and Layout",
         "description": "Add layout and background styles to make the app visually appealing and responsive.",
         "code": {
-            "file": "style.css",
-            "snippet": "body {\n  font-family: 'Segoe UI', sans-serif;\n  background: linear-gradient(to right, #74ebd5, #acb6e5);\n  margin: 0;\n  padding: 0;\n}\n\n.container {\n  max-width: 800px;\n  margin: auto;\n  padding: 20px;\n}\n\n.weather-box, .forecast-card {\n  background-color: #ffffffbb;\n  padding: 15px;\n  border-radius: 10px;\n  margin-bottom: 20px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n}"
+          "file": "style.css",
+          "snippet": "body {\n  font-family: 'Segoe UI', sans-serif;\n  background: linear-gradient(to right, #74ebd5, #acb6e5);\n  margin: 0;\n  padding: 0;\n}\n\n.container {\n  max-width: 800px;\n  margin: auto;\n  padding: 20px;\n}\n\n.weather-box, .forecast-card {\n  background-color: #ffffffbb;\n  padding: 15px;\n  border-radius: 10px;\n  margin-bottom: 20px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n}"
         }
-    },
-    {
+      },
+      {
         "step": 4,
         "title": "Style Search Input and Buttons",
         "description": "Add styling to input and button for better user interaction.",
         "code": {
-            "file": "style.css",
-            "snippet": "#city-input {\n  padding: 10px;\n  font-size: 16px;\n  width: 60%;\n}\n\n#search-btn {\n  padding: 10px 20px;\n  background-color: #0077b6;\n  color: white;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}"
+          "file": "style.css",
+          "snippet": "#city-input {\n  padding: 10px;\n  font-size: 16px;\n  width: 60%;\n}\n\n#search-btn {\n  padding: 10px 20px;\n  background-color: #0077b6;\n  color: white;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}"
         }
-    },
-    {
+      },
+      {
         "step": 5,
         "title": "Implement Responsive Forecast Cards",
         "description": "Make forecast cards flexible and responsive across devices.",
         "code": {
-            "file": "style.css",
-            "snippet": ".forecast-container {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 15px;\n  justify-content: space-between;\n}\n\n.forecast-card {\n  flex: 1 1 calc(20% - 10px);\n  text-align: center;\n}\n\n@media (max-width: 600px) {\n  .forecast-card {\n    flex: 1 1 100%;\n  }\n}"
+          "file": "style.css",
+          "snippet": ".forecast-container {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 15px;\n  justify-content: space-between;\n}\n\n.forecast-card {\n  flex: 1 1 calc(20% - 10px);\n  text-align: center;\n}\n\n@media (max-width: 600px) {\n  .forecast-card {\n    flex: 1 1 100%;\n  }\n}"
         }
-    },
-    {
+      },
+      {
         "step": 6,
         "title": "Add Search Event Listener in JS",
         "description": "Add event listener to the search button to trigger weather fetching.",
         "code": {
-            "file": "script.js",
-            "snippet": "document.getElementById('search-btn').addEventListener('click', () => {\n  const city = document.getElementById('city-input').value;\n  if (city) {\n    fetchWeather(city);\n  }\n});"
+          "file": "script.js",
+          "snippet": "document.getElementById('search-btn').addEventListener('click', () => {\n  const city = document.getElementById('city-input').value;\n  if (city) {\n    fetchWeather(city);\n  }\n});"
         }
-    },
-    {
+      },
+      {
         "step": 7,
         "title": "Fetch Weather Data Using OpenWeather API",
         "description": "Use async/await to fetch current and forecast weather data.",
         "code": {
-            "file": "script.js",
-            "snippet": "async function fetchWeather(city) {\n  try {\n    const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);\n    const weatherData = await weatherRes.json();\n\n    const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);\n    const forecastData = await forecastRes.json();\n\n    displayCurrentWeather(weatherData);\n    displayForecast(forecastData.list);\n  } catch (error) {\n    alert('City not found. Please try again.');\n    console.error(error);\n  }\n}"
+          "file": "script.js",
+          "snippet": "async function fetchWeather(city) {\n  try {\n    const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);\n    const weatherData = await weatherRes.json();\n\n    const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);\n    const forecastData = await forecastRes.json();\n\n    displayCurrentWeather(weatherData);\n    displayForecast(forecastData.list);\n  } catch (error) {\n    alert('City not found. Please try again.');\n    console.error(error);\n  }\n}"
         }
-    },
-    {
+      },
+      {
         "step": 8,
         "title": "Display Current Weather",
         "description": "Use DOM manipulation to show current weather info from API.",
         "code": {
-            "file": "script.js",
-            "snippet": "function displayCurrentWeather(data) {\n  const container = document.getElementById('current-weather');\n  container.innerHTML = `\n    <h2>Current Weather in ${data.name}</h2>\n    <p><strong>Temperature:</strong> ${data.main.temp} °C</p>\n    <p><strong>Humidity:</strong> ${data.main.humidity}%</p>\n    <p><strong>Wind:</strong> ${data.wind.speed} m/s</p>\n    <img src=\"https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png\" alt=\"${data.weather[0].description}\"/>\n    <p>${data.weather[0].description}</p>\n  `;\n}"
+          "file": "script.js",
+          "snippet": "function displayCurrentWeather(data) {\n  const container = document.getElementById('current-weather');\n  container.innerHTML = `\n    <h2>Current Weather in ${data.name}</h2>\n    <p><strong>Temperature:</strong> ${data.main.temp} °C</p>\n    <p><strong>Humidity:</strong> ${data.main.humidity}%</p>\n    <p><strong>Wind:</strong> ${data.wind.speed} m/s</p>\n    <img src=\"https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png\" alt=\"${data.weather[0].description}\"/>\n    <p>${data.weather[0].description}</p>\n  `;\n}"
         }
-    },
-    {
+      },
+      {
         "step": 9,
         "title": "Display 5-Day Forecast",
         "description": "Filter forecast data and create a card for each day at noon.",
         "code": {
-            "file": "script.js",
-            "snippet": "function displayForecast(forecastList) {\n  const container = document.getElementById('forecast');\n  container.innerHTML = '<h2>5-Day Forecast</h2>';\n\n  const dailyForecasts = forecastList.filter(forecast => forecast.dt_txt.includes('12:00:00'));\n\n  dailyForecasts.forEach(forecast => {\n    const date = new Date(forecast.dt_txt).toLocaleDateString();\n    container.innerHTML += `\n      <div class=\"forecast-card\">\n        <h3>${date}</h3>\n        <img src=\"https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png\" />\n        <p><strong>${forecast.main.temp} °C</strong></p>\n        <p>${forecast.weather[0].description}</p>\n      </div>\n    `;\n  });\n}"
+          "file": "script.js",
+          "snippet": "function displayForecast(forecastList) {\n  const container = document.getElementById('forecast');\n  container.innerHTML = '<h2>5-Day Forecast</h2>';\n\n  const dailyForecasts = forecastList.filter(forecast => forecast.dt_txt.includes('12:00:00'));\n\n  dailyForecasts.forEach(forecast => {\n    const date = new Date(forecast.dt_txt).toLocaleDateString();\n    container.innerHTML += `\n      <div class=\"forecast-card\">\n        <h3>${date}</h3>\n        <img src=\"https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png\" />\n        <p><strong>${forecast.main.temp} °C</strong></p>\n        <p>${forecast.weather[0].description}</p>\n      </div>\n    `;\n  });\n}"
         }
-    },
-    {
+      },
+      {
         "step": 10,
         "title": "Add Your OpenWeather API Key",
         "description": "Replace the placeholder with your actual OpenWeather API key.",
         "code": {
-            "file": "script.js",
-            "snippet": "const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your API key"
+          "file": "script.js",
+          "snippet": "const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your API key"
         }
-    }
-]},
-{
-  "id": "todo-cli-enhanced",
-  "name": "Command-Line To-Do List App",
-  "description": "A beginner-level project that teaches Python fundamentals through a text-based to-do list using file storage and menu-based navigation.",
-  "difficulty": "Beginner",
-  "category": "Python",
-  "category2": "python",
-  "icon": "ListTodo",
-  "techStack": ["Python"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Set Up Project File",
-      "description": "Create a file named `todo.py` and add a welcome message.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "print(\"Welcome to Your CLI To-Do List App\")"
       }
-    },
-    {
-      "step": 2,
-      "title": "Design Menu Interface",
-      "description": "Add a function to print a menu with user options.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def show_menu():\n    print(\"\\nMenu Options:\")\n    print(\"1. View Tasks\")\n    print(\"2. Add Task\")\n    print(\"3. Remove Task\")\n    print(\"4. Clear All Tasks\")\n    print(\"5. Exit\")"
+    ]
+  },
+  {
+    "id": "todo-cli-enhanced",
+    "name": "Command-Line To-Do List App",
+    "description": "A beginner-level project that teaches Python fundamentals through a text-based to-do list using file storage and menu-based navigation.",
+    "difficulty": "Beginner",
+    "category": "Python",
+    "category2": "python",
+    "icon": "ListTodo",
+    "techStack": ["Python"],
+    "subscription": "free",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Set Up Project File",
+        "description": "Create a file named `todo.py` and add a welcome message.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "print(\"Welcome to Your CLI To-Do List App\")"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Design Menu Interface",
+        "description": "Add a function to print a menu with user options.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def show_menu():\n    print(\"\\nMenu Options:\")\n    print(\"1. View Tasks\")\n    print(\"2. Add Task\")\n    print(\"3. Remove Task\")\n    print(\"4. Clear All Tasks\")\n    print(\"5. Exit\")"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Handle File Reading",
+        "description": "Create a function to load tasks from a text file if it exists.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def load_tasks():\n    try:\n        with open(\"tasks.txt\", \"r\") as file:\n            return [line.strip() for line in file.readlines()]\n    except FileNotFoundError:\n        return []"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Handle File Writing",
+        "description": "Create a function to save the updated list of tasks to the file.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def save_tasks(tasks):\n    with open(\"tasks.txt\", \"w\") as file:\n        for task in tasks:\n            file.write(task + \"\\n\")"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Display Task List",
+        "description": "Show the user the current tasks with indices for reference.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def view_tasks(tasks):\n    if not tasks:\n        print(\"No tasks yet.\")\n    else:\n        print(\"\\nYour Tasks:\")\n        for i, task in enumerate(tasks, 1):\n            print(f\"{i}. {task}\")"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Add New Task",
+        "description": "Prompt the user to enter a task and append it to the list.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def add_task(tasks):\n    task = input(\"Enter a new task: \")\n    if task:\n        tasks.append(task)\n        save_tasks(tasks)\n        print(\"Task added.\")"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Remove a Task by Number",
+        "description": "Let the user delete a task using its displayed number.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def remove_task(tasks):\n    view_tasks(tasks)\n    try:\n        index = int(input(\"Enter task number to remove: \")) - 1\n        if 0 <= index < len(tasks):\n            removed = tasks.pop(index)\n            save_tasks(tasks)\n            print(f\"Removed: {removed}\")\n        else:\n            print(\"Invalid task number.\")\n    except ValueError:\n        print(\"Please enter a valid number.\")"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Clear All Tasks",
+        "description": "Warn the user before removing all tasks.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def clear_all(tasks):\n    confirm = input(\"Are you sure you want to delete all tasks? (y/n): \").lower()\n    if confirm == 'y':\n        tasks.clear()\n        save_tasks(tasks)\n        print(\"All tasks cleared.\")"
+        }
+      },
+      {
+        "step": 9,
+        "title": "Put Everything in a Loop",
+        "description": "Create a main function to run the menu in a continuous loop.",
+        "code": {
+          "file": "todo.py",
+          "snippet": "def main():\n    tasks = load_tasks()\n    while True:\n        show_menu()\n        choice = input(\"Choose an option (1-5): \")\n        if choice == \"1\":\n            view_tasks(tasks)\n        elif choice == \"2\":\n            add_task(tasks)\n        elif choice == \"3\":\n            remove_task(tasks)\n        elif choice == \"4\":\n            clear_all(tasks)\n        elif choice == \"5\":\n            print(\"Goodbye!\")\n            break\n        else:\n            print(\"Invalid choice. Try again.\")\n\nif __name__ == '__main__':\n    main()"
+        }
       }
-    },
-    {
-      "step": 3,
-      "title": "Handle File Reading",
-      "description": "Create a function to load tasks from a text file if it exists.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def load_tasks():\n    try:\n        with open(\"tasks.txt\", \"r\") as file:\n            return [line.strip() for line in file.readlines()]\n    except FileNotFoundError:\n        return []"
+    ]
+  },
+  {
+    "id": "movie-recommender-ml",
+    "name": "Content-Based Movie Recommender",
+    "description": "An intermediate Python project to build a content-based recommender using TF-IDF vectorization and cosine similarity with scikit-learn.",
+    "difficulty": "Intermediate",
+    "category": "Python",
+    "category2": "python",
+    "icon": "Film",
+    "techStack": ["Python", "Pandas", "Scikit-learn"],
+    "subscription": "paid",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Install Required Libraries",
+        "description": "Ensure pandas and scikit-learn are installed in your environment.",
+        "code": {
+          "file": "requirements.txt",
+          "snippet": "pandas\nscikit-learn"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Load Movie Dataset",
+        "description": "Use pandas to load the movie data from a CSV file containing titles and descriptions.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "import pandas as pd\n\ndf = pd.read_csv('movies.csv')\ndf = df[['title', 'overview']].dropna()\nprint(df.head())"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Preprocess Movie Overviews",
+        "description": "Convert all text to lowercase and replace missing values with empty strings.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "df['overview'] = df['overview'].fillna('').str.lower()"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Convert Text to TF-IDF Vectors",
+        "description": "Use TfidfVectorizer to convert text into numeric format while ignoring common English stop words.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "from sklearn.feature_extraction.text import TfidfVectorizer\n\nvectorizer = TfidfVectorizer(stop_words='english')\ntfidf_matrix = vectorizer.fit_transform(df['overview'])"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Calculate Cosine Similarity",
+        "description": "Compute the pairwise similarity scores between all movie descriptions.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "from sklearn.metrics.pairwise import linear_kernel\n\ncosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Map Titles to Index",
+        "description": "Create a reverse lookup from movie title to index for fast access.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "indices = pd.Series(df.index, index=df['title'].str.lower())"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Create the Recommender Function",
+        "description": "Define a function that returns the top 5 most similar movies.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "def recommend(title, cosine_sim=cosine_sim):\n    idx = indices.get(title.lower())\n    if idx is None:\n        return [\"Movie not found.\"]\n    sim_scores = list(enumerate(cosine_sim[idx]))\n    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]\n    movie_indices = [i[0] for i in sim_scores]\n    return df['title'].iloc[movie_indices].tolist()"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Build the User Input Loop",
+        "description": "Add an input loop to allow users to search and receive recommendations.",
+        "code": {
+          "file": "recommender.py",
+          "snippet": "if __name__ == '__main__':\n    print(\"Welcome to the Movie Recommender!\")\n    while True:\n        query = input(\"\\nEnter a movie title (or type 'exit'): \")\n        if query.lower() == 'exit':\n            print(\"Goodbye!\")\n            break\n        results = recommend(query)\n        print(\"\\nRecommendations:\")\n        for movie in results:\n            print(\"-\", movie)"
+        }
       }
-    },
-    {
-      "step": 4,
-      "title": "Handle File Writing",
-      "description": "Create a function to save the updated list of tasks to the file.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def save_tasks(tasks):\n    with open(\"tasks.txt\", \"w\") as file:\n        for task in tasks:\n            file.write(task + \"\\n\")"
+    ]
+  },
+  {
+    "id": "quote-generator-react",
+    "name": "Random Quote Generator",
+    "description": "A beginner-friendly React app that fetches random quotes from an API and displays them with styling and interactive functionality.",
+    "difficulty": "Beginner",
+    "category": "React",
+    "category2": "react",
+    "icon": "Quote",
+    "techStack": ["React", "CSS", "Quotable API"],
+    "subscription": "free",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Initialize React Project",
+        "description": "Use Create React App to set up your development environment. This gives you a full React boilerplate with zero config.",
+        "code": {
+          "file": "Terminal",
+          "snippet": "npx create-react-app quote-generator\ncd quote-generator\nnpm start"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Clean Up Default Files",
+        "description": "Remove unused files like logo.svg, App.test.js, and default content in App.css and App.js so you can start with a clean slate.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "// Replace contents with a blank functional component\nfunction App() {\n  return <div className=\"App\"></div>;\n}\n\nexport default App;"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Create a QuoteBox Component",
+        "description": "Create a new file `QuoteBox.js` to hold the quote, author, and button. We use props to pass data into this component.",
+        "code": {
+          "file": "src/components/QuoteBox.js",
+          "snippet": "import React from 'react';\n\nconst QuoteBox = ({ quote, author, onNewQuote }) => (\n  <div className=\"quote-box\">\n    <p className=\"quote\">“{quote}”</p>\n    <p className=\"author\">— {author}</p>\n    <button onClick={onNewQuote}>New Quote</button>\n  </div>\n);\n\nexport default QuoteBox;"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Import the QuoteBox into App.js",
+        "description": "Bring the QuoteBox into App.js and prepare to pass it the state it needs.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "import React, { useState } from 'react';\nimport QuoteBox from './components/QuoteBox';\n\nfunction App() {\n  const [quote, setQuote] = useState('');\n  const [author, setAuthor] = useState('');\n\n  const fetchQuote = async () => {\n    const res = await fetch('https://api.quotable.io/random');\n    const data = await res.json();\n    setQuote(data.content);\n    setAuthor(data.author);\n  };\n\n  return (\n    <div className=\"App\">\n      <QuoteBox quote={quote} author={author} onNewQuote={fetchQuote} />\n    </div>\n  );\n}\n\nexport default App;"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Use useEffect to Load First Quote Automatically",
+        "description": "Use `useEffect` to automatically fetch a quote when the app loads. This prevents the user from seeing a blank screen.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "import { useEffect } from 'react';\n\nuseEffect(() => {\n  fetchQuote();\n}, []);"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Style the App with CSS",
+        "description": "Make the quote box centered, add spacing, and apply nice fonts and colors.",
+        "code": {
+          "file": "src/App.css",
+          "snippet": "body {\n  font-family: 'Arial', sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background: #1e3c72;\n  color: white;\n}\n\n.quote-box {\n  text-align: center;\n  padding: 2rem;\n  background-color: #2a5298;\n  border-radius: 10px;\n  max-width: 500px;\n}\n\nbutton {\n  margin-top: 1rem;\n  padding: 10px 20px;\n  background: #00c9ff;\n  border: none;\n  color: #fff;\n  font-weight: bold;\n  border-radius: 5px;\n  cursor: pointer;\n}"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Test the Application",
+        "description": "Click the 'New Quote' button to see if quotes change. Check that your app fetches data correctly and handles errors gracefully.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "// Optional: Add try/catch\ntry {\n  const res = await fetch(...);\n} catch (error) {\n  alert(\"Could not fetch quote. Please try again later.\");\n}"
+        }
       }
-    },
-    {
-      "step": 5,
-      "title": "Display Task List",
-      "description": "Show the user the current tasks with indices for reference.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def view_tasks(tasks):\n    if not tasks:\n        print(\"No tasks yet.\")\n    else:\n        print(\"\\nYour Tasks:\")\n        for i, task in enumerate(tasks, 1):\n            print(f\"{i}. {task}\")"
+    ]
+  },
+  {
+    "id": "movie-search-react",
+    "name": "Movie Search App",
+    "description": "A React app that allows users to search movies using OMDb API and view details. Covers form handling, API requests, and conditional rendering.",
+    "difficulty": "Intermediate",
+    "category": "React",
+    "category2": "react",
+    "icon": "Film",
+    "techStack": ["React", "Axios", "OMDb API", "Tailwind CSS"],
+    "subscription": "paid",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Create a React Project",
+        "description": "Set up a new React project using Create React App and install Axios and Tailwind for styling.",
+        "code": {
+          "file": "Terminal",
+          "snippet": "npx create-react-app movie-search\ncd movie-search\nnpm install axios\nnpm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Configure Tailwind",
+        "description": "Enable Tailwind CSS in your project by editing your config and CSS entry point.",
+        "code": {
+          "file": "src/index.css",
+          "snippet": "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Create State and Input UI",
+        "description": "Use useState to track the user's input and movie data. Create a search form with Tailwind styles.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "const [query, setQuery] = useState('');\nconst [movies, setMovies] = useState([]);\n\nreturn (\n  <div className=\"max-w-3xl mx-auto p-4\">\n    <input\n      className=\"border p-2 w-full mb-4\"\n      placeholder=\"Search movies...\"\n      value={query}\n      onChange={(e) => setQuery(e.target.value)}\n    />\n    <button className=\"bg-blue-600 text-white px-4 py-2\" onClick={searchMovies}>Search</button>\n  </div>\n);"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Create the Search Function",
+        "description": "Use Axios to fetch movie data from OMDb API based on the query and store it in state.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "const searchMovies = async () => {\n  try {\n    const response = await axios.get(`https://www.omdbapi.com/?apikey=YOUR_API_KEY&s=${query}`);\n    setMovies(response.data.Search);\n  } catch (error) {\n    alert(\"Error fetching data\");\n  }\n};"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Display Movie Cards",
+        "description": "Loop through movie data and display posters and info in a grid layout using Tailwind CSS.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "<div className=\"grid grid-cols-2 md:grid-cols-3 gap-4 mt-4\">\n  {movies?.map(movie => (\n    <div key={movie.imdbID} className=\"bg-white shadow p-2 rounded\">\n      <img src={movie.Poster} className=\"w-full h-64 object-cover\" alt={movie.Title} />\n      <h3 className=\"text-lg font-bold mt-2\">{movie.Title}</h3>\n      <p>{movie.Year}</p>\n    </div>\n  ))}\n</div>"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Add Loading and Error States",
+        "description": "Show feedback during API loading or when no results are found.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "const [loading, setLoading] = useState(false);\nconst [error, setError] = useState(null);\n\nconst searchMovies = async () => {\n  setLoading(true);\n  setError(null);\n  try {\n    const res = await axios.get(...);\n    if (res.data.Response === \"False\") setError(\"No results found\");\n    else setMovies(res.data.Search);\n  } catch (err) {\n    setError(\"Failed to fetch movies.\");\n  }\n  setLoading(false);\n};"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Add Detailed View on Click (Bonus)",
+        "description": "When a movie card is clicked, show more info like plot, genre, actors by making another API call using the movie's `imdbID`.",
+        "code": {
+          "file": "src/App.js",
+          "snippet": "// Example call:\nconst res = await axios.get(`https://www.omdbapi.com/?apikey=YOUR_API_KEY&i=${id}`);\n// Display title, plot, genre, etc."
+        }
       }
-    },
-    {
-      "step": 6,
-      "title": "Add New Task",
-      "description": "Prompt the user to enter a task and append it to the list.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def add_task(tasks):\n    task = input(\"Enter a new task: \")\n    if task:\n        tasks.append(task)\n        save_tasks(tasks)\n        print(\"Task added.\")"
+    ]
+  },
+  {
+    "id": "task-manager-app",
+    "name": "Task Manager App",
+    "icon": "ClipboardList",
+    "description": "A full-featured task manager app where users can register, log in, and manage their to-do list.",
+    "difficulty": "Intermediate",
+    "category": "Full Stack",
+    "category2": "fullstack",
+    "techStack": ["React", "Node.js", "Express", "MongoDB", "JWT"],
+    "subscription": "free",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Set up the React App",
+        "description": "Use Create React App or Vite to initialize your frontend. Install Axios and React Router.",
+        "code": {
+          "file": "terminal",
+          "snippet": "npx create-react-app client\ncd client\nnpm install axios react-router-dom"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Create Basic Pages and Routing",
+        "description": "Set up routes for Home, Register, Login, and Dashboard.",
+        "code": {
+          "file": "App.js",
+          "snippet": "<Routes>\n  <Route path=\"/\" element={<Home />} />\n  <Route path=\"/login\" element={<Login />} />\n  <Route path=\"/register\" element={<Register />} />\n  <Route path=\"/dashboard\" element={<Dashboard />} />\n</Routes>"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Build Auth Forms",
+        "description": "Create forms for user registration and login that send POST requests to the backend.",
+        "code": {
+          "file": "Register.js",
+          "snippet": "axios.post('/api/auth/register', { username, email, password })"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Initialize Express Server",
+        "description": "Create a new Node.js project, install dependencies, and create your Express server.",
+        "code": {
+          "file": "server.js",
+          "snippet": "const express = require('express');\nconst app = express();\napp.use(express.json());\napp.listen(5000, () => console.log('Server running'))"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Connect MongoDB",
+        "description": "Use Mongoose to connect to a MongoDB Atlas instance.",
+        "code": {
+          "file": "db.js",
+          "snippet": "mongoose.connect(process.env.MONGO_URI)"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Create User & Task Models",
+        "description": "Define Mongoose schemas for users and tasks.",
+        "code": {
+          "file": "models/User.js",
+          "snippet": "const UserSchema = new mongoose.Schema({ email: String, password: String })"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Build Authentication API",
+        "description": "Implement user registration and login routes with JWT support.",
+        "code": {
+          "file": "routes/auth.js",
+          "snippet": "jwt.sign({ id: user._id }, process.env.JWT_SECRET)"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Implement Protected Task Routes",
+        "description": "Use JWT middleware to restrict access to task creation and retrieval routes.",
+        "code": {
+          "file": "middleware/auth.js",
+          "snippet": "const token = req.header('Authorization').split(' ')[1]; jwt.verify(token, secret)"
+        }
+      },
+      {
+        "step": 9,
+        "title": "Build Task Manager UI",
+        "description": "Create components to add, delete, and complete tasks. Fetch tasks from the backend.",
+        "code": {
+          "file": "Dashboard.js",
+          "snippet": "useEffect(() => { axios.get('/api/tasks') }, [])"
+        }
       }
-    },
-    {
-      "step": 7,
-      "title": "Remove a Task by Number",
-      "description": "Let the user delete a task using its displayed number.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def remove_task(tasks):\n    view_tasks(tasks)\n    try:\n        index = int(input(\"Enter task number to remove: \")) - 1\n        if 0 <= index < len(tasks):\n            removed = tasks.pop(index)\n            save_tasks(tasks)\n            print(f\"Removed: {removed}\")\n        else:\n            print(\"Invalid task number.\")\n    except ValueError:\n        print(\"Please enter a valid number.\")"
+    ]
+  },
+  {
+    "id": "ecommerce-catalog",
+    "name": "E-Commerce Product Catalog",
+    "icon": "ShoppingCart",
+    "description": "Users can browse, search, and filter products. Admins can add/edit or delete them among other actions.",
+    "difficulty": "Intermediate",
+    "category": "Full Stack",
+    "category2": "fullstack",
+    "techStack": ["React", "Node.js", "Express", "PostgreSQL", "Prisma"],
+    "subscription": "paid",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Initialize Frontend",
+        "description": "Set up your React app and install Tailwind CSS for styling.",
+        "code": {
+          "file": "terminal",
+          "snippet": "npx create-react-app ecommerce-client\ncd ecommerce-client\nnpm install tailwindcss"
+        }
+      },
+      {
+        "step": 2,
+        "title": "Build Product Pages",
+        "description": "Create Home, Product Detail, and Cart pages.",
+        "code": {
+          "file": "ProductCard.js",
+          "snippet": "<div className=\"product\">\n  <img src={product.imageUrl} />\n  <h2>{product.name}</h2>\n  <p>${product.price}</p>\n</div>"
+        }
+      },
+      {
+        "step": 3,
+        "title": "Set Up Cart Functionality",
+        "description": "Use Zustand or Context API to manage a cart and update total price.",
+        "code": {
+          "file": "cartStore.js",
+          "snippet": "addToCart: (product) => set(state => ({ cart: [...state.cart, product] }))"
+        }
+      },
+      {
+        "step": 4,
+        "title": "Initialize Backend",
+        "description": "Set up Express backend and connect to PostgreSQL with Prisma ORM.",
+        "code": {
+          "file": "terminal",
+          "snippet": "npm init -y\nnpm install express prisma @prisma/client pg cors dotenv"
+        }
+      },
+      {
+        "step": 5,
+        "title": "Define Prisma Schema",
+        "description": "Set up models for User and Product and run the migration.",
+        "code": {
+          "file": "schema.prisma",
+          "snippet": "model Product { id Int @id @default(autoincrement()) name String description String price Float imageUrl String }"
+        }
+      },
+      {
+        "step": 6,
+        "title": "Build Product Routes",
+        "description": "Create API endpoints to list, create, update, and delete products.",
+        "code": {
+          "file": "routes/products.js",
+          "snippet": "router.get('/', async (req, res) => { const products = await prisma.product.findMany(); res.json(products); })"
+        }
+      },
+      {
+        "step": 7,
+        "title": "Secure Admin Access",
+        "description": "Use JWT to verify if a user is an admin before allowing product edits.",
+        "code": {
+          "file": "middleware/isAdmin.js",
+          "snippet": "if (!user.isAdmin) return res.status(403).send('Forbidden');"
+        }
+      },
+      {
+        "step": 8,
+        "title": "Connect Frontend to Backend",
+        "description": "Use Axios to fetch products and populate the UI.",
+        "code": {
+          "file": "ProductList.js",
+          "snippet": "useEffect(() => { axios.get('/api/products').then(res => setProducts(res.data)) }, [])"
+        }
+      },
+      {
+        "step": 9,
+        "title": "Add Search and Filter",
+        "description": "Let users search products by name and filter by price range or category.",
+        "code": {
+          "file": "SearchBar.js",
+          "snippet": "const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));"
+        }
       }
-    },
-    {
-      "step": 8,
-      "title": "Clear All Tasks",
-      "description": "Warn the user before removing all tasks.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def clear_all(tasks):\n    confirm = input(\"Are you sure you want to delete all tasks? (y/n): \").lower()\n    if confirm == 'y':\n        tasks.clear()\n        save_tasks(tasks)\n        print(\"All tasks cleared.\")"
-      }
-    },
-    {
-      "step": 9,
-      "title": "Put Everything in a Loop",
-      "description": "Create a main function to run the menu in a continuous loop.",
-      "code": {
-        "file": "todo.py",
-        "snippet": "def main():\n    tasks = load_tasks()\n    while True:\n        show_menu()\n        choice = input(\"Choose an option (1-5): \")\n        if choice == \"1\":\n            view_tasks(tasks)\n        elif choice == \"2\":\n            add_task(tasks)\n        elif choice == \"3\":\n            remove_task(tasks)\n        elif choice == \"4\":\n            clear_all(tasks)\n        elif choice == \"5\":\n            print(\"Goodbye!\")\n            break\n        else:\n            print(\"Invalid choice. Try again.\")\n\nif __name__ == '__main__':\n    main()"
-      }
-    }
-  ]
-},
-
-{
-  "id": "movie-recommender-ml",
-  "name": "Content-Based Movie Recommender",
-  "description": "An intermediate Python project to build a content-based recommender using TF-IDF vectorization and cosine similarity with scikit-learn.",
-  "difficulty": "Intermediate",
-  "category": "Python",
-  "category2": "python",
-  "icon": "Film",
-  "techStack": ["Python", "Pandas", "Scikit-learn"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Install Required Libraries",
-      "description": "Ensure pandas and scikit-learn are installed in your environment.",
-      "code": {
-        "file": "requirements.txt",
-        "snippet": "pandas\nscikit-learn"
-      }
-    },
-    {
-      "step": 2,
-      "title": "Load Movie Dataset",
-      "description": "Use pandas to load the movie data from a CSV file containing titles and descriptions.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "import pandas as pd\n\ndf = pd.read_csv('movies.csv')\ndf = df[['title', 'overview']].dropna()\nprint(df.head())"
-      }
-    },
-    {
-      "step": 3,
-      "title": "Preprocess Movie Overviews",
-      "description": "Convert all text to lowercase and replace missing values with empty strings.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "df['overview'] = df['overview'].fillna('').str.lower()"
-      }
-    },
-    {
-      "step": 4,
-      "title": "Convert Text to TF-IDF Vectors",
-      "description": "Use TfidfVectorizer to convert text into numeric format while ignoring common English stop words.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "from sklearn.feature_extraction.text import TfidfVectorizer\n\nvectorizer = TfidfVectorizer(stop_words='english')\ntfidf_matrix = vectorizer.fit_transform(df['overview'])"
-      }
-    },
-    {
-      "step": 5,
-      "title": "Calculate Cosine Similarity",
-      "description": "Compute the pairwise similarity scores between all movie descriptions.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "from sklearn.metrics.pairwise import linear_kernel\n\ncosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)"
-      }
-    },
-    {
-      "step": 6,
-      "title": "Map Titles to Index",
-      "description": "Create a reverse lookup from movie title to index for fast access.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "indices = pd.Series(df.index, index=df['title'].str.lower())"
-      }
-    },
-    {
-      "step": 7,
-      "title": "Create the Recommender Function",
-      "description": "Define a function that returns the top 5 most similar movies.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "def recommend(title, cosine_sim=cosine_sim):\n    idx = indices.get(title.lower())\n    if idx is None:\n        return [\"Movie not found.\"]\n    sim_scores = list(enumerate(cosine_sim[idx]))\n    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]\n    movie_indices = [i[0] for i in sim_scores]\n    return df['title'].iloc[movie_indices].tolist()"
-      }
-    },
-    {
-      "step": 8,
-      "title": "Build the User Input Loop",
-      "description": "Add an input loop to allow users to search and receive recommendations.",
-      "code": {
-        "file": "recommender.py",
-        "snippet": "if __name__ == '__main__':\n    print(\"Welcome to the Movie Recommender!\")\n    while True:\n        query = input(\"\\nEnter a movie title (or type 'exit'): \")\n        if query.lower() == 'exit':\n            print(\"Goodbye!\")\n            break\n        results = recommend(query)\n        print(\"\\nRecommendations:\")\n        for movie in results:\n            print(\"-\", movie)"
-      }
-    }
-  ]
-}, 
-{
-  "id": "quote-generator-react",
-  "name": "Random Quote Generator",
-  "description": "A beginner-friendly React app that fetches random quotes from an API and displays them with styling and interactive functionality.",
-  "difficulty": "Beginner",
-  "category": "React",
-  "category2":"react",
-  "icon": "Quote",
-  "techStack": ["React", "CSS", "Quotable API"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Initialize React Project",
-      "description": "Use Create React App to set up your development environment. This gives you a full React boilerplate with zero config.",
-      "code": {
-        "file": "Terminal",
-        "snippet": "npx create-react-app quote-generator\ncd quote-generator\nnpm start"
-      }
-    },
-    {
-      "step": 2,
-      "title": "Clean Up Default Files",
-      "description": "Remove unused files like logo.svg, App.test.js, and default content in App.css and App.js so you can start with a clean slate.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "// Replace contents with a blank functional component\nfunction App() {\n  return <div className=\"App\"></div>;\n}\n\nexport default App;"
-      }
-    },
-    {
-      "step": 3,
-      "title": "Create a QuoteBox Component",
-      "description": "Create a new file `QuoteBox.js` to hold the quote, author, and button. We use props to pass data into this component.",
-      "code": {
-        "file": "src/components/QuoteBox.js",
-        "snippet": "import React from 'react';\n\nconst QuoteBox = ({ quote, author, onNewQuote }) => (\n  <div className=\"quote-box\">\n    <p className=\"quote\">“{quote}”</p>\n    <p className=\"author\">— {author}</p>\n    <button onClick={onNewQuote}>New Quote</button>\n  </div>\n);\n\nexport default QuoteBox;"
-      }
-    },
-    {
-      "step": 4,
-      "title": "Import the QuoteBox into App.js",
-      "description": "Bring the QuoteBox into App.js and prepare to pass it the state it needs.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "import React, { useState } from 'react';\nimport QuoteBox from './components/QuoteBox';\n\nfunction App() {\n  const [quote, setQuote] = useState('');\n  const [author, setAuthor] = useState('');\n\n  const fetchQuote = async () => {\n    const res = await fetch('https://api.quotable.io/random');\n    const data = await res.json();\n    setQuote(data.content);\n    setAuthor(data.author);\n  };\n\n  return (\n    <div className=\"App\">\n      <QuoteBox quote={quote} author={author} onNewQuote={fetchQuote} />\n    </div>\n  );\n}\n\nexport default App;"
-      }
-    },
-    {
-      "step": 5,
-      "title": "Use useEffect to Load First Quote Automatically",
-      "description": "Use `useEffect` to automatically fetch a quote when the app loads. This prevents the user from seeing a blank screen.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "import { useEffect } from 'react';\n\nuseEffect(() => {\n  fetchQuote();\n}, []);"
-      }
-    },
-    {
-      "step": 6,
-      "title": "Style the App with CSS",
-      "description": "Make the quote box centered, add spacing, and apply nice fonts and colors.",
-      "code": {
-        "file": "src/App.css",
-        "snippet": "body {\n  font-family: 'Arial', sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background: #1e3c72;\n  color: white;\n}\n\n.quote-box {\n  text-align: center;\n  padding: 2rem;\n  background-color: #2a5298;\n  border-radius: 10px;\n  max-width: 500px;\n}\n\nbutton {\n  margin-top: 1rem;\n  padding: 10px 20px;\n  background: #00c9ff;\n  border: none;\n  color: #fff;\n  font-weight: bold;\n  border-radius: 5px;\n  cursor: pointer;\n}"
-      }
-    },
-    {
-      "step": 7,
-      "title": "Test the Application",
-      "description": "Click the 'New Quote' button to see if quotes change. Check that your app fetches data correctly and handles errors gracefully.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "// Optional: Add try/catch\ntry {\n  const res = await fetch(...);\n} catch (error) {\n  alert(\"Could not fetch quote. Please try again later.\");\n}"
-      }
-    }
-  ]
-},
-{
-  "id": "movie-search-react",
-  "name": "Movie Search App",
-  "description": "A React app that allows users to search movies using OMDb API and view details. Covers form handling, API requests, and conditional rendering.",
-  "difficulty": "Intermediate",
-  "category": "React",
-  "category2":"react",
-  "icon": "Film",
-  "techStack": ["React", "Axios", "OMDb API", "Tailwind CSS"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Create a React Project",
-      "description": "Set up a new React project using Create React App and install Axios and Tailwind for styling.",
-      "code": {
-        "file": "Terminal",
-        "snippet": "npx create-react-app movie-search\ncd movie-search\nnpm install axios\nnpm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p"
-      }
-    },
-    {
-      "step": 2,
-      "title": "Configure Tailwind",
-      "description": "Enable Tailwind CSS in your project by editing your config and CSS entry point.",
-      "code": {
-        "file": "src/index.css",
-        "snippet": "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
-      }
-    },
-    {
-      "step": 3,
-      "title": "Create State and Input UI",
-      "description": "Use useState to track the user's input and movie data. Create a search form with Tailwind styles.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "const [query, setQuery] = useState('');\nconst [movies, setMovies] = useState([]);\n\nreturn (\n  <div className=\"max-w-3xl mx-auto p-4\">\n    <input\n      className=\"border p-2 w-full mb-4\"\n      placeholder=\"Search movies...\"\n      value={query}\n      onChange={(e) => setQuery(e.target.value)}\n    />\n    <button className=\"bg-blue-600 text-white px-4 py-2\" onClick={searchMovies}>Search</button>\n  </div>\n);"
-      }
-    },
-    {
-      "step": 4,
-      "title": "Create the Search Function",
-      "description": "Use Axios to fetch movie data from OMDb API based on the query and store it in state.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "const searchMovies = async () => {\n  try {\n    const response = await axios.get(`https://www.omdbapi.com/?apikey=YOUR_API_KEY&s=${query}`);\n    setMovies(response.data.Search);\n  } catch (error) {\n    alert(\"Error fetching data\");\n  }\n};"
-      }
-    },
-    {
-      "step": 5,
-      "title": "Display Movie Cards",
-      "description": "Loop through movie data and display posters and info in a grid layout using Tailwind CSS.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "<div className=\"grid grid-cols-2 md:grid-cols-3 gap-4 mt-4\">\n  {movies?.map(movie => (\n    <div key={movie.imdbID} className=\"bg-white shadow p-2 rounded\">\n      <img src={movie.Poster} className=\"w-full h-64 object-cover\" alt={movie.Title} />\n      <h3 className=\"text-lg font-bold mt-2\">{movie.Title}</h3>\n      <p>{movie.Year}</p>\n    </div>\n  ))}\n</div>"
-      }
-    },
-    {
-      "step": 6,
-      "title": "Add Loading and Error States",
-      "description": "Show feedback during API loading or when no results are found.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "const [loading, setLoading] = useState(false);\nconst [error, setError] = useState(null);\n\nconst searchMovies = async () => {\n  setLoading(true);\n  setError(null);\n  try {\n    const res = await axios.get(...);\n    if (res.data.Response === \"False\") setError(\"No results found\");\n    else setMovies(res.data.Search);\n  } catch (err) {\n    setError(\"Failed to fetch movies.\");\n  }\n  setLoading(false);\n};"
-      }
-    },
-    {
-      "step": 7,
-      "title": "Add Detailed View on Click (Bonus)",
-      "description": "When a movie card is clicked, show more info like plot, genre, actors by making another API call using the movie's `imdbID`.",
-      "code": {
-        "file": "src/App.js",
-        "snippet": "// Example call:\nconst res = await axios.get(`https://www.omdbapi.com/?apikey=YOUR_API_KEY&i=${id}`);\n// Display title, plot, genre, etc."
-      }
-    }
-  ]
-},
-{
-  "id": "task-manager-app",
-  "name": "Task Manager App",
-  "icon": "ClipboardList",
-  "description": "A full-featured task manager app where users can register, log in, and manage their to-do list.",
-  "difficulty": "Intermediate",
-  "category": "Full Stack",
-  "category2":"fullstack",
-  "techStack": ["React", "Node.js", "Express", "MongoDB", "JWT"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Set up the React App",
-      "description": "Use Create React App or Vite to initialize your frontend. Install Axios and React Router.",
-      "code": {
-        "file": "terminal",
-        "snippet": "npx create-react-app client\ncd client\nnpm install axios react-router-dom"
-      }
-    },
-    {
-      "step": 2,
-      "title": "Create Basic Pages and Routing",
-      "description": "Set up routes for Home, Register, Login, and Dashboard.",
-      "code": {
-        "file": "App.js",
-        "snippet": "<Routes>\n  <Route path=\"/\" element={<Home />} />\n  <Route path=\"/login\" element={<Login />} />\n  <Route path=\"/register\" element={<Register />} />\n  <Route path=\"/dashboard\" element={<Dashboard />} />\n</Routes>"
-      }
-    },
-    {
-      "step": 3,
-      "title": "Build Auth Forms",
-      "description": "Create forms for user registration and login that send POST requests to the backend.",
-      "code": {
-        "file": "Register.js",
-        "snippet": "axios.post('/api/auth/register', { username, email, password })"
-      }
-    },
-    {
-      "step": 4,
-      "title": "Initialize Express Server",
-      "description": "Create a new Node.js project, install dependencies, and create your Express server.",
-      "code": {
-        "file": "server.js",
-        "snippet": "const express = require('express');\nconst app = express();\napp.use(express.json());\napp.listen(5000, () => console.log('Server running'))"
-      }
-    },
-    {
-      "step": 5,
-      "title": "Connect MongoDB",
-      "description": "Use Mongoose to connect to a MongoDB Atlas instance.",
-      "code": {
-        "file": "db.js",
-        "snippet": "mongoose.connect(process.env.MONGO_URI)"
-      }
-    },
-    {
-      "step": 6,
-      "title": "Create User & Task Models",
-      "description": "Define Mongoose schemas for users and tasks.",
-      "code": {
-        "file": "models/User.js",
-        "snippet": "const UserSchema = new mongoose.Schema({ email: String, password: String })"
-      }
-    },
-    {
-      "step": 7,
-      "title": "Build Authentication API",
-      "description": "Implement user registration and login routes with JWT support.",
-      "code": {
-        "file": "routes/auth.js",
-        "snippet": "jwt.sign({ id: user._id }, process.env.JWT_SECRET)"
-      }
-    },
-    {
-      "step": 8,
-      "title": "Implement Protected Task Routes",
-      "description": "Use JWT middleware to restrict access to task creation and retrieval routes.",
-      "code": {
-        "file": "middleware/auth.js",
-        "snippet": "const token = req.header('Authorization').split(' ')[1]; jwt.verify(token, secret)"
-      }
-    },
-    {
-      "step": 9,
-      "title": "Build Task Manager UI",
-      "description": "Create components to add, delete, and complete tasks. Fetch tasks from the backend.",
-      "code": {
-        "file": "Dashboard.js",
-        "snippet": "useEffect(() => { axios.get('/api/tasks') }, [])"
-      }
-    }
-  ]
-},
-{
-  "id": "ecommerce-catalog",
-  "name": "E-Commerce Product Catalog",
-  "icon": "ShoppingCart",
-  "description": "Users can browse, search, and filter products. Admins can add/edit or delete them among other actions.",
-  "difficulty": "Intermediate",
-  "category": "Full Stack",
-  "category2":"fullstack",
-  "techStack": ["React", "Node.js", "Express", "PostgreSQL", "Prisma"],
-  "status": "free",
-  "steps": [
-    {
-      "step": 1,
-      "title": "Initialize Frontend",
-      "description": "Set up your React app and install Tailwind CSS for styling.",
-      "code": {
-        "file": "terminal",
-        "snippet": "npx create-react-app ecommerce-client\ncd ecommerce-client\nnpm install tailwindcss"
-      }
-    },
-    {
-      "step": 2,
-      "title": "Build Product Pages",
-      "description": "Create Home, Product Detail, and Cart pages.",
-      "code": {
-        "file": "ProductCard.js",
-        "snippet": "<div className=\"product\">\n  <img src={product.imageUrl} />\n  <h2>{product.name}</h2>\n  <p>${product.price}</p>\n</div>"
-      }
-    },
-    {
-      "step": 3,
-      "title": "Set Up Cart Functionality",
-      "description": "Use Zustand or Context API to manage a cart and update total price.",
-      "code": {
-        "file": "cartStore.js",
-        "snippet": "addToCart: (product) => set(state => ({ cart: [...state.cart, product] }))"
-      }
-    },
-    {
-      "step": 4,
-      "title": "Initialize Backend",
-      "description": "Set up Express backend and connect to PostgreSQL with Prisma ORM.",
-      "code": {
-        "file": "terminal",
-        "snippet": "npm init -y\nnpm install express prisma @prisma/client pg cors dotenv"
-      }
-    },
-    {
-      "step": 5,
-      "title": "Define Prisma Schema",
-      "description": "Set up models for User and Product and run the migration.",
-      "code": {
-        "file": "schema.prisma",
-        "snippet": "model Product { id Int @id @default(autoincrement()) name String description String price Float imageUrl String }"
-      }
-    },
-    {
-      "step": 6,
-      "title": "Build Product Routes",
-      "description": "Create API endpoints to list, create, update, and delete products.",
-      "code": {
-        "file": "routes/products.js",
-        "snippet": "router.get('/', async (req, res) => { const products = await prisma.product.findMany(); res.json(products); })"
-      }
-    },
-    {
-      "step": 7,
-      "title": "Secure Admin Access",
-      "description": "Use JWT to verify if a user is an admin before allowing product edits.",
-      "code": {
-        "file": "middleware/isAdmin.js",
-        "snippet": "if (!user.isAdmin) return res.status(403).send('Forbidden');"
-      }
-    },
-    {
-      "step": 8,
-      "title": "Connect Frontend to Backend",
-      "description": "Use Axios to fetch products and populate the UI.",
-      "code": {
-        "file": "ProductList.js",
-        "snippet": "useEffect(() => { axios.get('/api/products').then(res => setProducts(res.data)) }, [])"
-      }
-    },
-    {
-      "step": 9,
-      "title": "Add Search and Filter",
-      "description": "Let users search products by name and filter by price range or category.",
-      "code": {
-        "file": "SearchBar.js",
-        "snippet": "const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));"
-      }
-    }
-  ]
-}
-
-
-  ]
+    ]
+  }
+]
