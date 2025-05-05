@@ -10,6 +10,7 @@ import ProjectDetail from "./routes/ProjectDetail";
 import FreeProjects from './pages/FreeProjects';
 import {LoginForm} from "./components/Login-form";
 import {SignupForm} from "./components/Signup-form"
+import { Analytics } from "@vercel/analytics/react"
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <Analytics/>
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
