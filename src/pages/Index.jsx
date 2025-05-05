@@ -92,7 +92,7 @@ const Index = () => {
           </Button>
           
         </div>}
-
+        <div className="flex gap-4">
         <Button onClick={()=>{
           //navigate('/myaccount')
               console.log('clicked')
@@ -107,6 +107,7 @@ const Index = () => {
             <CircleDollarSign  className="h-4 w-4" />
             Pricing
           </Button>
+          </div>
       </div>
       {/* Hero Section */}
       <header className="text-center my-12">
