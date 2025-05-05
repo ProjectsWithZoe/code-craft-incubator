@@ -55,17 +55,19 @@ const Index = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/projectdata');
+        const endpoint = authenticated ? '/api/projectdata' : '/api/freeprojectdata';
+        const res = await fetch(endpoint);
         const data = await res.json();
         console.log(data);
-        setAllProjects(data)
+        setAllProjects(data);
       } catch (err) {
         console.error('Error fetching project data:', err);
       }
     };
   
     fetchData();
-  }, []);
+  }, [authenticated]);
+  
   
   
 

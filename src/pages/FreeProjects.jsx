@@ -8,7 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail,Keyboard, Music, Laugh, Layout, Quote, Film } from "lucide-react";
+import {
+  Mail,
+  Keyboard,
+  Music,
+  Laugh,
+  Layout,
+  Quote,
+  Film,
+} from "lucide-react";
 import allProjects from "../../data/projects.json";
 import { useNavigate } from "react-router-dom";
 import useProjectData from "../hooks/useProjectData";
@@ -64,33 +72,35 @@ const difficultyColors = {
 };
 
 const icons = {
-    Mail: Mail,
-    Keyboard: Keyboard,
-    Music: Music,
-    Laugh: Laugh,
-    Layout:Layout,
-    Film:Film,
-    Quote: Quote
+  Mail: Mail,
+  Keyboard: Keyboard,
+  Music: Music,
+  Laugh: Laugh,
+  Layout: Layout,
+  Film: Film,
+  Quote: Quote,
 };
 
 const FreeProjects = () => {
-  const { setProjectType, projectType, filteredProjects, setFilteredProjects } = useProjectData();
+  const {
+    setProjectType,
+    projectType,
+    filteredProjects,
+    setFilteredProjects,
+    allProjects,
+  } = useProjectData();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(allProjects)
-    console.log(projectType)
+    console.log(allProjects);
+    console.log(projectType);
     // Filter projects based on projectType
-    let filtered;
-    if (projectType!=='all'){
-        filtered = allProjects.filter(project => 
-            project.category2 === projectType.toLowerCase()
-          );
-    } else {
-        filtered = allProjects
-    }
-    console.log(filtered)
-    console.log(filteredProjects)
+    const filtered = allProjects.filter(
+      (project) => project.category2 === projectType.toLowerCase()
+    );
+
+    console.log(filtered);
+    console.log(filteredProjects);
     setFilteredProjects(filtered);
   }, [projectType]);
 
@@ -98,30 +108,44 @@ const FreeProjects = () => {
     navigate(`/projects/${projectId}`);
   };
 
-  const handleBackButtonClicked = ()=>{
-    navigate('/')
-  }
+  const handleBackButtonClicked = () => {
+    navigate("/");
+  };
 
   const allProjectButtonClicked = () => {
-    if (projectType !== 'all') {
-      setProjectType('all');
+    if (projectType !== "all") {
+      setProjectType("all");
     } else {
       // Manually set filteredProjects if already 'all'
       setFilteredProjects(allProjects);
     }
   };
-  
 
   return (
     <div className="container mx-auto py-8 px-4">
-        <div className="flex justify-between">
-            <button onClick={handleBackButtonClicked} className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white">Back</button>
-            <button onClick={allProjectButtonClicked} className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white">All Projects</button>
-        </div>
-      {filteredProjects?.length>0 && <h1 className="text-3xl font-bold mb-8">{projectType!=="all" ? filteredProjects[0]['category']: "All" } Projects</h1>}
+      <div className="flex justify-between">
+        <button
+          onClick={handleBackButtonClicked}
+          className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white"
+        >
+          Back
+        </button>
+        <button
+          onClick={allProjectButtonClicked}
+          className="rounded-lg text-xl mb-8 border border-blue-800 px-4 py-2 bg-blue-700 text-white"
+        >
+          All Projects
+        </button>
+      </div>
+      {filteredProjects?.length > 0 && (
+        <h1 className="text-3xl font-bold mb-8">
+          {projectType !== "all" ? filteredProjects[0]["category"] : "All"}{" "}
+          Projects
+        </h1>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredProjects.map((project) => {
-          const Icon = icons[project.icon]||Mail;
+          const Icon = icons[project.icon] || Mail;
           return (
             <Card
               key={project.id}
@@ -134,11 +158,16 @@ const FreeProjects = () => {
                   </div>
                   <CardTitle>{project.name}</CardTitle>
                 </div>
-                <CardDescription className="text-lg">{project.description}</CardDescription>
+                <CardDescription className="text-lg">
+                  {project.description}
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge className="text-lg border border-blue-200 bg-blue-100 rounded-md" variant="secondary">
+                  <Badge
+                    className="text-lg border border-blue-200 bg-blue-100 rounded-md"
+                    variant="secondary"
+                  >
                     {project.category}
                   </Badge>
                   <Badge
@@ -148,7 +177,6 @@ const FreeProjects = () => {
                     {project.difficulty}
                   </Badge>
                 </div>
-                
               </CardContent>
               <CardFooter>
                 <Button
