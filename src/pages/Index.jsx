@@ -98,7 +98,7 @@ const Index = () => {
               console.log('clicked')
             }} size="sm" className="gap-2">
             <User  className="h-4 w-4" />
-            User
+            My Account
           </Button>
         <Button onClick={()=>{
           navigate('/pricing')
