@@ -21,7 +21,7 @@ import { useUserId } from "../hooks/useUserId";
 import { formatDate } from "date-fns";
 
 const Index = () => {
-  const { projectData, setProjectData, projectType, setProjectType } =
+  const { projectData, setProjectData, projectType, setProjectType, authenticated } =
     useProjectData();
   const navigate = useNavigate();
   const userId = useUserId()
@@ -66,10 +66,10 @@ const Index = () => {
       {/* Navigation */}
       <div className="flex justify-between items-center mb-12">
         <div className="flex items-center gap-2">
-          <Code2 className="h-6 w-6 text-primary" />
-          <span className="font-semibold">CodeCraft</span>
+          <Code2 className="h-6 w-6 text-primary text-blue-500" />
+          <span className="font-semibold text-xl text-blue-500">CodeCraft</span>
         </div>
-        <div className="flex gap-4">
+        {authenticated && <div className="flex gap-4">
           <Button onClick={()=>{
             navigate('/login')
           }} variant="outline" size="sm" className="gap-2">
@@ -80,11 +80,8 @@ const Index = () => {
             <UserPlus className="h-4 w-4" />
             Sign Up
           </Button>
-        </div>
+        </div>}
       </div>
-
-      <button onClick={handleAccessDB} className=" border border-blue-800 p-4 justify-center">Access DB</button>
-
       {/* Hero Section */}
       <header className="text-center my-12">
         <div className="flex justify-center mb-4">
@@ -106,10 +103,10 @@ const Index = () => {
           <BookOpen className=" h-4 w-4" />
           Browse Free Projects
         </Button>
-        <Button variant="outline" size="lg" className="gap-2 text-md">
+        {authenticated && <Button variant="outline" size="lg" className="gap-2 text-md">
           <UserPlus className="h-4 w-4" />
           Sign Up for More
-        </Button>
+        </Button>}
       </div>
 
       {/* Project Types Section */}
