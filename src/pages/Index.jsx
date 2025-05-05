@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import {
   Code2,
   CircleDollarSign,
- 
+  User,
   Trophy,
   LogIn,
   UserPlus,
@@ -40,9 +40,9 @@ const Index = () => {
     console.log(data)
   }
 
-  useEffect(()=>{
+  /*useEffect(()=>{
       addUser()
-  }, [userId])
+  }, [userId])*/
 
   const handleProjectClick = (projectId) => {
     navigate(`/projects/${projectId}`);
@@ -92,6 +92,14 @@ const Index = () => {
           </Button>
           
         </div>}
+
+        <Button onClick={()=>{
+          //navigate('/myaccount')
+              console.log('clicked')
+            }} size="sm" className="gap-2">
+            <User  className="h-4 w-4" />
+            User
+          </Button>
         <Button onClick={()=>{
           navigate('/pricing')
               console.log('clicked')
