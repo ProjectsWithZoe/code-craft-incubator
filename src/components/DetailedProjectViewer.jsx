@@ -16,7 +16,7 @@ SyntaxHighlighter.registerLanguage("html", html);
 SyntaxHighlighter.registerLanguage("python", python);
 
 export default function DetailedProjectViewer({ projectData }) {
-  const { name, description, difficulty, category, steps } = projectData || {};
+  const { name, description, difficulty, category, steps, dataset } = projectData || {};
   const [openStep, setOpenStep] = useState(null);
   const navigate = useNavigate();
 
@@ -56,6 +56,13 @@ export default function DetailedProjectViewer({ projectData }) {
             {category}
           </span>
         </div>
+        {dataset && <span>  <a
+            href={`/${dataset}`}
+            download
+            className="hover:underline"
+          >
+            {dataset}
+          </a></span>}
       </div>
 
       {/* Steps */}

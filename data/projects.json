@@ -481,6 +481,7 @@
   "icon": "Film",
   "techStack": ["Python", "Pandas", "Scikit-learn"],
   "status": "free",
+  "dataset":"movies.csv",
   "steps": [
     {
       "step": 1,
