@@ -93,13 +93,14 @@ const Index = () => {
           
         </div>}
         <div className="flex gap-4">
-        <Button onClick={()=>{
-          //navigate('/myaccount')
+        {/*<Button onClick={()=>{
+          navigate('/myaccount')
               console.log('clicked')
             }} size="sm" className="gap-2">
             <User  className="h-4 w-4" />
             My Account
-          </Button>
+          </Button>*/}
+          <AccountButton/>
         <Button onClick={()=>{
           navigate('/pricing')
               console.log('clicked')
