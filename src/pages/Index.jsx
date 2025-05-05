@@ -1,32 +1,19 @@
 import React, { useEffect } from "react";
-import ProjectIdeas from "@/components/ProjectIdeas";
-import DetailedProjectViewer from "@/components/DetailedProjectViewer";
-import { useState } from "react";
-import { Separator } from "@/components/ui/separator";
+
 import {
   Code2,
-  Layout,
-  Globe,
-  Rocket,
-  Book,
-  Target,
+ 
   Trophy,
   LogIn,
   UserPlus,
-  ArrowRight,
+ 
   Star,
   Clock,
   BookOpen,
-  SquarePi
+  
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import useProjectData from "@/hooks/useProjectData";
 import { useNavigate } from "react-router-dom";
 import ListedProjectTypes from "../components/ListedProjectTypes";

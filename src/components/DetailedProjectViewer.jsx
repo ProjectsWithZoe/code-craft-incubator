@@ -3,6 +3,7 @@ import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import css from "react-syntax-highlighter/dist/esm/languages/hljs/css";
 import html from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
+import python from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
 import {
   atomOneDark,
   atomOneLight,
@@ -12,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 SyntaxHighlighter.registerLanguage("javascript", js);
 SyntaxHighlighter.registerLanguage("css", css);
 SyntaxHighlighter.registerLanguage("html", html);
+SyntaxHighlighter.registerLanguage("python", python);
 
 export default function DetailedProjectViewer({ projectData }) {
   const { name, description, difficulty, category, steps } = projectData || {};
@@ -22,6 +24,7 @@ export default function DetailedProjectViewer({ projectData }) {
     if (fileName.endsWith(".html")) return "html";
     if (fileName.endsWith(".css")) return "css";
     if (fileName.endsWith(".js")) return "javascript";
+    if (fileName.endsWith(".py")) return "python";
     return "text";
   };
 
