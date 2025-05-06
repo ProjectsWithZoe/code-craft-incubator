@@ -9,7 +9,7 @@ import ProjectDetail from "./routes/ProjectDetail";
 import FreeProjects from './pages/FreeProjects';
 import { Analytics } from "@vercel/analytics/react"
 import { AuthProvider } from './contexts/AuthContext';
-import { AccountModal } from './components/AccountModal';
+import { AccountButton } from './components/AccountButton';
 
 const queryClient = new QueryClient();
 
@@ -25,7 +25,7 @@ const App = () => (
           <div className="min-h-screen">
             <header className="bg-white shadow">
               <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-end">
-                <AccountModal />
+                <AccountButton />
               </div>
             </header>
             <main>
