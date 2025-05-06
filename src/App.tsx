@@ -4,19 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./routes/ProjectDetail";
-import FreeProjects from "./pages/FreeProjects";
-import { LoginForm } from "./components/Login-form";
-import { SignupForm } from "./components/Signup-form";
-import { Analytics } from "@vercel/analytics/react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import FreeProjects from './pages/FreeProjects';
+import { Analytics } from "@vercel/analytics/react"
+import { AuthProvider } from './contexts/AuthContext';
+import { AccountModal } from './components/AccountModal';
 
 const queryClient = new QueryClient();
 
@@ -26,28 +19,26 @@ const App = () => (
       <Toaster />
       <Sonner />
       <Analytics />
-      <header>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </header>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/projects/:id" element={<ProjectDetail />} />
-
-          {/*<Route path="/project/:projectId" element={<ProjectDetails />} />*/}
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-          <Route path="/projects" element={<FreeProjects />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<SignupForm />} />
-        </Routes>
-      </BrowserRouter>
+      
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="min-h-screen">
+            <header className="bg-white shadow">
+              <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-end">
+                <AccountModal />
+              </div>
+            </header>
+            <main>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/projects" element={<FreeProjects />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
