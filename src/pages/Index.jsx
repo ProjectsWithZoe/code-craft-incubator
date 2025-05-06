@@ -182,6 +182,14 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <footer>
+      <footer className="flex justify-between">
+  <a href="/privacypolicy.html">Privacy Policy</a> |
+  <a href="/termsandconditions.html">Terms & Conditions</a> |
+  <a href="/refundpolicy.html">Refund Policy</a>
+</footer>
+
+      </footer>
     </div>
   );
 };
