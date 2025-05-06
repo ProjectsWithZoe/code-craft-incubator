@@ -7,10 +7,16 @@ import Index from "./pages/Index";
 
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./routes/ProjectDetail";
-import FreeProjects from './pages/FreeProjects';
-import {LoginForm} from "./components/Login-form";
-import {SignupForm} from "./components/Signup-form"
-import { Analytics } from "@vercel/analytics/react"
+import FreeProjects from "./pages/FreeProjects";
+import { LoginForm } from "./components/Login-form";
+import { SignupForm } from "./components/Signup-form";
+import { Analytics } from "@vercel/analytics/react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 const queryClient = new QueryClient();
 
@@ -19,8 +25,16 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <Analytics/>
-      
+      <Analytics />
+      <header>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </header>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -29,11 +43,9 @@ const App = () => (
           {/*<Route path="/project/:projectId" element={<ProjectDetails />} />*/}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
-          <Route path='/projects' element={<FreeProjects/>} />
-          <Route path='/login' element={<LoginForm/>} />
-          <Route path='/signup' element={<SignupForm/>} />
-
-          
+          <Route path="/projects" element={<FreeProjects />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignupForm />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
