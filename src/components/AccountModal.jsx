@@ -20,6 +20,7 @@ export function AccountModal({ isOpen, onClose }) {
       
         if (isSignUp) {
           const { error } = await signUp(email, password);
+          console.log(error)
       
           if (error) {
             // Use error.code for reliability
