@@ -22,15 +22,7 @@ export function AccountModal({ isOpen, onClose }) {
           const { error } = await signUp(email, password);
           console.log(error)
       
-          if (error) {
-            // Use error.code for reliability
-            if (error.message.toLowerCase().includes("user already registered")) {
-              throw new Error(
-                "An account with this email already exists. Please sign in instead."
-              );
-            }
-            throw error;
-          }
+          if (error) throw error;
       
           toast.success(
             "Account created successfully! Please check your email for verification."
