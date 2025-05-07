@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, User, LogIn, LogOut, CreditCard } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'sonner';
 
 export function AccountModal({ isOpen, onClose }) {
   const { user, signIn, signUp, signOut } = useAuth();
@@ -8,23 +9,42 @@ export function AccountModal({ isOpen, onClose }) {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     try {
       if (isSignUp) {
         const { error } = await signUp(email, password);
         if (error) throw error;
+        toast.success('Account created successfully! Please check your email for verification.');
       } else {
         const { error } = await signIn(email, password);
         if (error) throw error;
+        toast.success('Signed in successfully!');
       }
       setEmail('');
       setPassword('');
+      onClose();
     } catch (error) {
       setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await signOut();
+      if (error) throw error;
+      toast.success('Signed out successfully!');
+      onClose();
+    } catch (error) {
+      toast.error('Error signing out. Please try again.');
     }
   };
 
@@ -63,6 +83,7 @@ export function AccountModal({ isOpen, onClose }) {
                       onChange={(e) => setEmail(e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                   <div>
@@ -76,6 +97,7 @@ export function AccountModal({ isOpen, onClose }) {
                       onChange={(e) => setPassword(e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                   {error && (
@@ -84,9 +106,14 @@ export function AccountModal({ isOpen, onClose }) {
                   <div className="flex space-x-4">
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={isLoading}
                     >
-                      <LogIn className="h-5 w-5 mr-2" />
+                      {isLoading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      ) : (
+                        <LogIn className="h-5 w-5 mr-2" />
+                      )}
                       {isSignUp ? 'Sign Up' : 'Sign In'}
                     </button>
                   </div>
@@ -94,6 +121,7 @@ export function AccountModal({ isOpen, onClose }) {
                 <button
                   onClick={() => setIsSignUp(!isSignUp)}
                   className="w-full text-sm text-blue-600 hover:text-blue-500"
+                  disabled={isLoading}
                 >
                   {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
                 </button>
@@ -108,8 +136,9 @@ export function AccountModal({ isOpen, onClose }) {
                   </div>
                 </div>
                 <button
-                  onClick={signOut}
+                  onClick={handleSignOut}
                   className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+                  disabled={isLoading}
                 >
                   <LogOut className="h-5 w-5 mr-2" />
                   Sign Out
