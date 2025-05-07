@@ -17,44 +17,41 @@ export function AccountModal({ isOpen, onClose }) {
     setIsLoading(true);
 
     try {
-      if (isSignUp) {
-        const { error } = await signUp(email, password);
-
-        if (error) {
-          // Use error.code for reliability
-          if (error.message.toLowerCase().includes("user already registered")) {
-            throw new Error(
-              "An account with this email already exists. Please sign in instead."
-            );
-          }
-          toast.error(error)
-          throw error;
-        }
-
-        toast.success(
-          "Account created successfully! Please check your email for verification."
-        );
-      } else {
-        const { error } = await signIn(email, password);
-        if (error) {
-            toast.error(error)
+      
+        if (isSignUp) {
+          const { error } = await signUp(email, password);
+      
+          if (error) {
+            // Use error.code for reliability
+            if (error.message.toLowerCase().includes("user already registered")) {
+              throw new Error(
+                "An account with this email already exists. Please sign in instead."
+              );
+            }
             throw error;
+          }
+      
+          toast.success(
+            "Account created successfully! Please check your email for verification."
+          );
+        } else {
+          const { error } = await signIn(email, password);
+          if (error) throw error;
+      
+          toast.success("Signed in successfully!");
         }
-
-        toast.success("Signed in successfully!");
+      
+        setEmail("");
+        setPassword("");
+        onClose();
+      } catch (error) {
+        setError(error.message);
+        toast.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
-
-      setEmail("");
-      setPassword("");
-      onClose();
-    } catch (error) {
-      setError(error.message);
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
     }
-  };
-
+      
   const handleSignOut = async () => {
     try {
       const { error } = await signOut();
