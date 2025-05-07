@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { X, User, LogIn, LogOut, CreditCard } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { toast } from 'sonner';
-import { supabase } from '../lib/supabase';
+import { useState } from "react";
+import { X, User, LogIn, LogOut, CreditCard } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from "sonner";
 
 export function AccountModal({ isOpen, onClose }) {
   const { user, signIn, signUp, signOut } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,31 +18,34 @@ export function AccountModal({ isOpen, onClose }) {
 
     try {
       if (isSignUp) {
-        // Check if user already exists
-        const { data: existingUser, error: checkError } = await supabase
-          .from('users')
-          .select('email')
-          .eq('email', email)
-          .single();
-
-        if (checkError && checkError.code !== 'PGRST116') { // PGRST116 is "no rows returned" error
-          throw checkError;
-        }
-
-        if (existingUser) {
-          throw new Error('An account with this email already exists. Please sign in instead.');
-        }
-
         const { error } = await signUp(email, password);
-        if (error) throw error;
-        toast.success('Account created successfully! Please check your email for verification.');
+
+        if (error) {
+          // Use error.code for reliability
+          if (error.message.toLowerCase().includes("user already registered")) {
+            throw new Error(
+              "An account with this email already exists. Please sign in instead."
+            );
+          }
+          toast.error(error)
+          throw error;
+        }
+
+        toast.success(
+          "Account created successfully! Please check your email for verification."
+        );
       } else {
         const { error } = await signIn(email, password);
-        if (error) throw error;
-        toast.success('Signed in successfully!');
+        if (error) {
+            toast.error(error)
+            throw error;
+        }
+
+        toast.success("Signed in successfully!");
       }
-      setEmail('');
-      setPassword('');
+
+      setEmail("");
+      setPassword("");
       onClose();
     } catch (error) {
       setError(error.message);
@@ -57,10 +59,10 @@ export function AccountModal({ isOpen, onClose }) {
     try {
       const { error } = await signOut();
       if (error) throw error;
-      toast.success('Signed out successfully!');
+      toast.success("Signed out successfully!");
       onClose();
     } catch (error) {
-      toast.error('Error signing out. Please try again.');
+      toast.error("Error signing out. Please try again.");
     }
   };
 
@@ -70,7 +72,10 @@ export function AccountModal({ isOpen, onClose }) {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={onClose}></div>
+          <div
+            className="absolute inset-0 bg-gray-500 opacity-75"
+            onClick={onClose}
+          ></div>
         </div>
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -89,7 +94,10 @@ export function AccountModal({ isOpen, onClose }) {
               <div className="space-y-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Email
                     </label>
                     <input
@@ -103,7 +111,10 @@ export function AccountModal({ isOpen, onClose }) {
                     />
                   </div>
                   <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Password
                     </label>
                     <input
@@ -116,9 +127,7 @@ export function AccountModal({ isOpen, onClose }) {
                       disabled={isLoading}
                     />
                   </div>
-                  {error && (
-                    <div className="text-red-500 text-sm">{error}</div>
-                  )}
+                  {error && <div className="text-red-500 text-sm">{error}</div>}
                   <div className="flex space-x-4">
                     <button
                       type="submit"
@@ -130,7 +139,7 @@ export function AccountModal({ isOpen, onClose }) {
                       ) : (
                         <LogIn className="h-5 w-5 mr-2" />
                       )}
-                      {isSignUp ? 'Sign Up' : 'Sign In'}
+                      {isSignUp ? "Sign Up" : "Sign In"}
                     </button>
                   </div>
                 </form>
@@ -139,7 +148,9 @@ export function AccountModal({ isOpen, onClose }) {
                   className="w-full text-sm text-blue-600 hover:text-blue-500"
                   disabled={isLoading}
                 >
-                  {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+                  {isSignUp
+                    ? "Already have an account? Sign in"
+                    : "Don't have an account? Sign up"}
                 </button>
               </div>
             ) : (
@@ -147,7 +158,9 @@ export function AccountModal({ isOpen, onClose }) {
                 <div className="flex items-center p-4 bg-gray-50 rounded-lg">
                   <CreditCard className="h-5 w-5 text-gray-400 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Subscription Status</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Subscription Status
+                    </p>
                     <p className="text-sm text-gray-500">Free</p>
                   </div>
                 </div>
@@ -166,4 +179,4 @@ export function AccountModal({ isOpen, onClose }) {
       </div>
     </div>
   );
-} 
+}
