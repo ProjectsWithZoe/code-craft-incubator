@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, User, LogIn, LogOut, CreditCard } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
+import { supabase } from '../lib/supabase';
 
 export function AccountModal({ isOpen, onClose }) {
   const { user, signIn, signUp, signOut } = useAuth();
@@ -18,6 +19,21 @@ export function AccountModal({ isOpen, onClose }) {
 
     try {
       if (isSignUp) {
+        // Check if user already exists
+        const { data: existingUser, error: checkError } = await supabase
+          .from('users')
+          .select('email')
+          .eq('email', email)
+          .single();
+
+        if (checkError && checkError.code !== 'PGRST116') { // PGRST116 is "no rows returned" error
+          throw checkError;
+        }
+
+        if (existingUser) {
+          throw new Error('An account with this email already exists. Please sign in instead.');
+        }
+
         const { error } = await signUp(email, password);
         if (error) throw error;
         toast.success('Account created successfully! Please check your email for verification.');
