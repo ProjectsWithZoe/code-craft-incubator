@@ -33,7 +33,7 @@ const Index = () => {
     const res = await fetch('/api/add-user', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({uuid: userId, date_accessed: date})
+      body: JSON.stringify({uuid: userId})
     });
     const data = await res.json()
     console.log(data)
