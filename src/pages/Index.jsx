@@ -28,16 +28,27 @@ const Index = () => {
   const date = formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss")
   console.log(userId, date)
 
-  const addUser = async()=>{
+  const addUser = async () => {
     if (!userId) return;
-    const res = await fetch('/api/add-user', {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({uuid: userId})
-    });
-    const data = await res.json()
-    console.log(data)
-  }
+    
+    try {
+      const res = await fetch('/api/add-user', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uuid: userId })
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || 'Failed to add user');
+      }
+
+      const data = await res.json();
+      console.log('User added:', data);
+    } catch (error) {
+      console.error('Error adding user:', error);
+    }
+  };
 
   useEffect(()=>{
       addUser()
