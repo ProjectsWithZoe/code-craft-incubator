@@ -1,6 +1,6 @@
 // pages/api/save-user.js
 
-import { supabase } from "../src/lib/supabase"
+import { supabase } from "../../lib/supabase"
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
