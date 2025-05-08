@@ -30,7 +30,7 @@ const Index = () => {
 
   const addUser = async()=>{
     if (!userId) return;
-    const res = await fetch('/api/add-user', {
+    const res = await fetch('/pages/api/add-user', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({uuid: userId})
