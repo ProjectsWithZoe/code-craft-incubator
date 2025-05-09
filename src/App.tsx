@@ -33,6 +33,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/projects" element={<FreeProjects />} />
+                {/*<Route path="/monthly" element={<RedirectWithToast/>}/>*/}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
